@@ -5,7 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Portfolio | Cristian Gannaban</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha512-dJQPyN8H6KmM9+OghAvVzR4yp9qq/3mV5eh4ZKxgFzjDgi5bItVv1FgZP+B2T2AX0UglN0jXD15oYjX9SLzTyg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <!-- Add Font Awesome for social media icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         * {
             margin: 0;
@@ -130,7 +131,7 @@
         }
         .hero-text h1 {
             font-size: clamp(3rem, 4vw, 4rem);
-            font-weight: 7  00;
+            font-weight: 700;
             line-height: 1.1;
             margin-bottom: 1rem;
             background: var(--gradient-primary);
@@ -446,6 +447,7 @@
             transition: all 0.3s ease;
             position: relative;
             overflow: hidden;
+            font-size: 1.5rem;
         }
         .social-link::before {
             content: '';
@@ -463,12 +465,30 @@
             transform: scale(1);
         }
         .social-link:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            transform: translateY(-2px) scale(1.1);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
         }
-        .social-link span {
+        .social-link i {
             position: relative;
             z-index: 1;
+            transition: all 0.3s ease;
+        }
+        .social-link:hover i {
+            transform: scale(1.1);
+        }
+
+        /* Specific social media colors on hover */
+        .social-link.facebook:hover {
+            background: #1877f2;
+        }
+        .social-link.linkedin:hover {
+            background: #0077b5;
+        }
+        .social-link.github:hover {
+            background: #333;
+        }
+        .social-link.email:hover {
+            background: #ea4335;
         }
 
         /* Footer */
@@ -697,23 +717,27 @@
     </section>
 
     <section class="section scroll-reveal" id="contact">
-  <h2 class="section-title">Let's Connect</h2>
-  <div class="contact-container">
-    <p style="font-size: 1.2rem; color: var(--text-secondary); margin-bottom: 1rem;">
-      Ready to bring your ideas to life? Whether it's a web application, data analysis project, or innovative solution, let's collaborate and create something amazing together.
-    </p>
-    <div class="social-links">
-      <a href="https://facebook.com/crstntaro" target="_blank" class="social-link" aria-label="Facebook">FB
-      </a>
-      <a href="https://linkedin.com/in/crstntaro" target="_blank" class="social-link" aria-label="LinkedIn">LinkedIn
-      </a>
-      <a href="https://github.com/crstntaro" target="_blank" class="social-link" aria-label="GitHub">GitHub
-      </a>
-      <a href="mailto:cristian.gannaban24@gmail.com" class="social-link" aria-label="Email">Email
-      </a>
-    </div>
-  </div>
-</section>
+        <h2 class="section-title">Let's Connect</h2>
+        <div class="contact-container">
+            <p style="font-size: 1.2rem; color: var(--text-secondary); margin-bottom: 1rem;">
+                Ready to bring your ideas to life? Whether it's a web application, data analysis project, or innovative solution, let's collaborate and create something amazing together.
+            </p>
+            <div class="social-links">
+                <a href="https://facebook.com/crstntaro" target="_blank" class="social-link facebook" aria-label="Facebook">
+                    <i class="fab fa-facebook-f"></i>
+                </a>
+                <a href="https://linkedin.com/in/crstntaro" target="_blank" class="social-link linkedin" aria-label="LinkedIn">
+                    <i class="fab fa-linkedin-in"></i>
+                </a>
+                <a href="https://github.com/crstntaro" target="_blank" class="social-link github" aria-label="GitHub">
+                    <i class="fab fa-github"></i>
+                </a>
+                <a href="mailto:cristian.gannaban24@gmail.com" class="social-link email" aria-label="Email">
+                    <i class="fas fa-envelope"></i>
+                </a>
+            </div>
+        </div>
+    </section>
 
     <footer>
         <p>© 2025 Cristian Gannaban. Crafted with passion, precision, and lots of coffee ☕</p>
