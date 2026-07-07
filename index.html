@@ -3,1077 +3,1261 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Cristian Gannaban</title>
-<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='4' fill='%230d0d0d'/><text x='50%25' y='57%25' dominant-baseline='middle' text-anchor='middle' font-family='sans-serif' font-weight='900' font-size='12' fill='%23ff4d00'>CG</text></svg>">
+<meta name="description" content="Cristian Gannaban — Developer & Data Specialist. Building web applications and data systems in Manila.">
+<title>Cristian Gannaban — Developer & Data Specialist</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' fill='%2313121a'/><text x='50%25' y='57%25' dominant-baseline='middle' text-anchor='middle' font-family='monospace' font-weight='900' font-size='11' fill='%23ff4d52'>CG</text></svg>">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Inter:ital,wght@0,400;0,500;0,600;0,700;1,700&display=swap" rel="stylesheet">
 <style>
-/* ─── TOKENS ─── */
-:root{
-  --dk:   #0d0d0d;
-  --lt:   #f2ede6;
-  --or:   #ff4d00;
-  --or2:  #ff6a2b;
-  --f:    'Space Grotesk', sans-serif;
-  --ease: cubic-bezier(.16,1,.3,1);
-  --snap: cubic-bezier(.77,0,.18,1);
+
+/* ── Tokens ─────────────────────────────── */
+:root {
+  --bg:      #13121a;
+  --surface: #1c1b26;
+  --border:  #252433;
+  --ink:     #f3f0ea;
+  --muted:   #9d98b0;
+  --dim:     #56526a;
+  --line:    #0a0910;
+  --red:     #ff4d52;
+  --green:   #54d98c;
+  --sh:      4px 4px 0 var(--line);
+  --px:      'Press Start 2P', monospace;
+  --ui:      'Inter', system-ui, sans-serif;
 }
 
-/* ─── RESET ─── */
-*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
-html,body{width:100%;height:100%;overflow:hidden;}
-body{
-  font-family:var(--f);
-  background:var(--dk);
-  color:var(--lt);
-  cursor:none;
+/* ── Reset ──────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: var(--ui);
+  font-size: 16px;
+  line-height: 1.7;
+  color: var(--ink);
+  background-color: var(--bg);
+  background-image:
+    linear-gradient(rgba(255,255,255,.015) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,.015) 1px, transparent 1px);
+  background-size: 34px 34px;
+  overflow-x: hidden;
 }
-::selection{background:var(--or);color:#fff;}
-a{text-decoration:none;color:inherit;}
+a { text-decoration: none; color: inherit; }
+img { display: block; max-width: 100%; }
+::selection { background: var(--red); color: #fff; }
+*::-webkit-scrollbar { width: 8px; }
+*::-webkit-scrollbar-track { background: var(--bg); }
+*::-webkit-scrollbar-thumb { background: var(--border); }
+*::-webkit-scrollbar-thumb:hover { background: var(--red); }
 
-/* ─── CURSOR ─── */
-#cur{
-  position:fixed;z-index:9999;pointer-events:none;
-  width:10px;height:10px;border-radius:50%;
-  background:var(--or);
-  transform:translate(-50%,-50%);
-  transition:width .25s var(--ease),height .25s var(--ease),border-radius .3s;
-  mix-blend-mode:difference;
-}
-#cur.big{width:56px;height:56px;border-radius:28px;}
-
-/* ─── PROGRESS BAR ─── */
-#progress{
-  position:fixed;top:0;left:0;z-index:800;
-  height:2px;background:var(--or);width:0%;
-  box-shadow:0 0 10px var(--or);
-  transition:width .1s linear;
-  pointer-events:none;
-}
-
-/* ─── NAV ─── */
-#nav{
-  position:fixed;top:0;left:0;right:0;z-index:700;
-  padding:1.4rem 2.8rem;
-  display:flex;align-items:center;justify-content:space-between;
-}
-.nav-logo{
-  font-size:.95rem;font-weight:700;letter-spacing:.08em;
-  text-transform:uppercase;color:var(--lt);
-  transition:color .2s;
-}
-.nav-logo em{color:var(--or);font-style:normal;}
-.nav-right{display:flex;align-items:center;gap:2.5rem;}
-.nav-slide-hints{display:flex;gap:.5rem;}
-.nav-dot{
-  width:6px;height:6px;border-radius:50%;
-  background:rgba(242,237,230,.2);
-  transition:background .3s,transform .3s;
-  cursor:none;
-}
-.nav-dot.active{background:var(--or);transform:scale(1.5);}
-.nav-cta{
-  font-size:.65rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;
-  background:var(--or);color:#fff;padding:.5rem 1.2rem;
-  transition:background .2s;cursor:none;
-}
-.nav-cta:hover{background:var(--or2);}
-.slide-counter{
-  font-size:.62rem;font-weight:500;letter-spacing:.12em;
-  color:rgba(242,237,230,.3);
-}
-.slide-counter span{color:var(--or);}
-
-/* ─── SLIDE ARROWS ─── */
-.slide-arrow{
-  position:fixed;top:50%;z-index:700;
-  transform:translateY(-50%);
-  width:44px;height:44px;
-  border:1px solid rgba(242,237,230,.12);
-  display:flex;align-items:center;justify-content:center;
-  font-size:.75rem;color:rgba(242,237,230,.3);
-  cursor:none;transition:all .22s;
-  background:rgba(13,13,13,.4);backdrop-filter:blur(8px);
-}
-.slide-arrow:hover{border-color:var(--or);color:var(--or);}
-#arrow-prev{left:1.4rem;}
-#arrow-next{right:1.4rem;}
-.slide-arrow.hidden{opacity:0;pointer-events:none;}
-
-/* ─── MAIN CONTAINER ─── */
-#container{
-  position:fixed;inset:0;
-  /* We translate this to navigate slides */
+/* ── Layout ─────────────────────────────── */
+.wrap {
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 0 clamp(20px, 5vw, 72px);
+  position: relative; z-index: 2;
 }
 
-/* ─── SLIDES ─── */
-.slide{
-  position:absolute;top:0;left:0;
-  width:100vw;height:100vh;
-  overflow:hidden;
-  /* Each slide is positioned by JS */
+/* ── Tetris background canvas ───────────── */
+#tetris-cv {
+  position: fixed; inset: 0;
+  z-index: 1; pointer-events: none;
+  width: 100%; height: 100%;
+  image-rendering: pixelated;
+  opacity: .18;
 }
 
-/* ══════════════════════════
-   SLIDE 0 — HERO
-══════════════════════════ */
-#s0{background:var(--dk);}
-.hero-wrap{
-  height:100%;
-  display:flex;flex-direction:column;
-  justify-content:flex-end;
-  padding:0 4rem 5rem;
-  position:relative;
-}
-/* Big background text */
-.hero-bg-word{
-  position:absolute;
-  right:-2rem;bottom:-1rem;
-  font-size:min(32vw,34rem);
-  font-weight:700;
-  color:rgba(242,237,230,.025);
-  line-height:1;
-  user-select:none;pointer-events:none;
-  letter-spacing:-.05em;
-  white-space:nowrap;
-}
-.hero-tag{
-  font-size:.65rem;font-weight:500;letter-spacing:.22em;
-  text-transform:uppercase;color:rgba(242,237,230,.35);
-  margin-bottom:1.6rem;
-  display:flex;align-items:center;gap:.7rem;
-}
-.hero-tag::before{content:'';width:20px;height:1.5px;background:var(--or);}
-.avail{display:flex;align-items:center;gap:.4rem;}
-.avail::before{
-  content:'';width:6px;height:6px;border-radius:50%;
-  background:#4ade80;box-shadow:0 0 8px #4ade80;
-  animation:blink 2.5s ease-in-out infinite;
-}
-@keyframes blink{0%,100%{opacity:1;}50%{opacity:.2;}}
-
-.hero-name{
-  font-size:clamp(4.5rem,9.5vw,11rem);
-  font-weight:700;line-height:.88;
-  letter-spacing:-.04em;
-  margin-bottom:3rem;
-}
-.hero-name .line{display:block;}
-.hero-name .accent{color:var(--or);}
-.hero-name .hollow{
-  -webkit-text-stroke:1.5px rgba(242,237,230,.25);
-  color:transparent;
+/* ── Battle canvas (fixed, flies over cards) */
+#battle-cv {
+  position: fixed; inset: 0;
+  z-index: 20;
+  pointer-events: none;
+  width: 100%; height: 100%;
+  image-rendering: pixelated;
 }
 
-.hero-foot{
-  display:flex;align-items:flex-end;
-  justify-content:space-between;gap:3rem;
+/* ── CRT boot overlay ───────────────────── */
+#crt-boot {
+  position: fixed; inset: 0; z-index: 9000;
+  background: var(--ink);
+  pointer-events: none;
+  animation: crt-boot .55s ease-out forwards;
 }
-.hero-desc{
-  font-size:.95rem;font-weight:400;
-  color:rgba(242,237,230,.42);line-height:1.75;
-  max-width:360px;
-}
-.hero-desc strong{color:var(--lt);}
-.hero-btns{display:flex;gap:.65rem;align-items:center;flex-shrink:0;}
-.btn{
-  display:inline-flex;align-items:center;gap:.4rem;
-  font-size:.65rem;font-weight:600;letter-spacing:.1em;
-  text-transform:uppercase;padding:.65rem 1.4rem;
-  transition:all .22s;cursor:none;
-}
-.btn-or{background:var(--or);color:#fff;}
-.btn-or:hover{background:var(--or2);transform:translateY(-2px);}
-.btn-gh{background:transparent;color:var(--lt);border:1px solid rgba(242,237,230,.18);}
-.btn-gh:hover{border-color:var(--or);color:var(--or);}
-.hero-scroll-hint{
-  position:absolute;right:2.8rem;bottom:5rem;
-  font-size:.55rem;font-weight:500;letter-spacing:.2em;
-  text-transform:uppercase;color:rgba(242,237,230,.2);
-  display:flex;align-items:center;gap:.5rem;
-  writing-mode:vertical-rl;
-}
-.hero-scroll-hint::after{
-  content:'';width:1px;height:40px;
-  background:linear-gradient(to bottom,rgba(242,237,230,.15),transparent);
+@keyframes crt-boot {
+  0%   { clip-path: inset(50% 0 50% 0); opacity: .85; }
+  38%  { clip-path: inset(0% 0 0% 0);   opacity: .85; }
+  78%  { clip-path: inset(0% 0 0% 0);   opacity: .15; }
+  100% { clip-path: inset(0% 0 0% 0);   opacity: 0;   visibility: hidden; }
 }
 
-/* ══════════════════════════
-   SLIDE 1 — ABOUT
-══════════════════════════ */
-#s1{background:var(--lt);color:var(--dk);}
-.about-inner{
-  display:grid;grid-template-columns:1fr 1fr;
-  height:100%;
+/* ── Nav ────────────────────────────────── */
+#nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  height: 60px;
+  display: flex; align-items: center;
+  padding: 0 clamp(20px, 5vw, 72px);
+  background: rgba(19,18,26,.94);
+  border-bottom: 1px solid var(--border);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  animation: nav-drop .4s .52s both;
 }
-.about-photo-col{
-  position:relative;overflow:hidden;
+@keyframes nav-drop {
+  from { transform: translateY(-100%); }
+  to   { transform: none; }
 }
-.about-photo{
-  width:100%;height:100%;
-  object-fit:cover;object-position:top center;
-  display:block;
-  filter:saturate(.85);
+.nav-brand { font-family: var(--px); font-size: 11px; }
+.nav-brand b { color: var(--red); font-weight: 400; }
+.nav-sp { flex: 1; }
+.nav-links { display: flex; align-items: center; gap: 28px; }
+.nav-links a {
+  font-size: 12px; font-weight: 500;
+  letter-spacing: .07em; text-transform: uppercase;
+  color: var(--muted);
+  position: relative;
+  transition: color .18s;
 }
-/* Big number overlay */
-.about-photo-num{
-  position:absolute;top:-.05em;left:-.05em;
-  font-size:min(45vw,40rem);font-weight:700;
-  color:rgba(13,13,13,.07);line-height:1;
-  pointer-events:none;user-select:none;
-  letter-spacing:-.06em;
+.nav-links a:hover, .nav-links a.active { color: var(--ink); }
+/* underline draws left-to-right */
+.nav-links a:not(.nav-cta)::after {
+  content: '';
+  position: absolute; bottom: -3px; left: 0;
+  width: 100%; height: 1.5px;
+  background: var(--red);
+  transform: scaleX(0); transform-origin: left;
+  transition: transform .2s;
 }
-.about-content{
-  padding:6rem 4rem;
-  display:flex;flex-direction:column;
-  justify-content:center;gap:2rem;
-  overflow-y:auto;
+.nav-links a:not(.nav-cta):hover::after,
+.nav-links a:not(.nav-cta).active::after { transform: scaleX(1); }
+.nav-cta {
+  padding: 7px 18px;
+  border: 2px solid var(--red);
+  color: var(--red) !important;
+  box-shadow: var(--sh);
+  font-family: var(--px);
+  font-size: 8px !important;
+  letter-spacing: .04em;
+  transition: background .18s, color .18s !important;
 }
-.slide-no{
-  font-size:.6rem;font-weight:600;letter-spacing:.22em;
-  text-transform:uppercase;color:var(--or);
-  display:flex;align-items:center;gap:.55rem;
-}
-.slide-no::before{content:'';width:16px;height:1.5px;background:var(--or);}
-.about-h{
-  font-size:clamp(2.5rem,4vw,4.5rem);
-  font-weight:700;letter-spacing:-.03em;line-height:.9;
-  color:var(--dk);
-}
-.about-h .or{color:var(--or);}
-.about-body{
-  font-size:.93rem;font-weight:400;
-  color:rgba(13,13,13,.55);line-height:1.82;
-}
-.about-body p{margin-bottom:.75rem;}
-.about-body strong{color:var(--dk);font-weight:600;}
-.about-stats{display:flex;gap:2rem;}
-.ast-n{font-size:3rem;font-weight:700;color:var(--dk);letter-spacing:-.05em;line-height:1;}
-.ast-n sup{font-size:.4em;color:var(--or);vertical-align:super;}
-.ast-d{font-size:.56rem;font-weight:500;letter-spacing:.14em;text-transform:uppercase;color:rgba(13,13,13,.38);margin-top:.2rem;}
-.about-chips{display:flex;flex-wrap:wrap;gap:.35rem;}
-.chip{
-  font-size:.6rem;font-weight:500;
-  background:transparent;border:1px solid rgba(13,13,13,.14);
-  color:rgba(13,13,13,.5);padding:.27rem .62rem;
-  transition:all .18s;cursor:none;
-}
-.chip:hover{background:var(--or);border-color:var(--or);color:#fff;}
-.about-cv{
-  font-size:.65rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;
-  color:var(--dk);border-bottom:2px solid var(--or);padding-bottom:.15rem;
-  display:inline-flex;align-items:center;gap:.4rem;
-  transition:color .2s;
-}
-.about-cv:hover{color:var(--or);}
+.nav-cta:hover { background: var(--red) !important; color: #fff !important; }
 
-/* ══════════════════════════
-   SLIDE 2 — SERVICES
-══════════════════════════ */
-#s2{background:var(--dk);}
-.svc-inner{
-  height:100%;padding:5rem 4rem;
-  display:grid;grid-template-rows:auto 1fr auto;
-  gap:2.5rem;
-  overflow:hidden;
+/* ── Hero ───────────────────────────────── */
+#hero {
+  position: relative; z-index: 25; /* above battle canvas */
+  min-height: 100svh;
+  display: flex; align-items: center;
+  background: #080610;
+  overflow: hidden;
 }
-.svc-header{display:flex;align-items:flex-end;justify-content:space-between;gap:2rem;}
-.svc-h{
-  font-size:clamp(3rem,6vw,7rem);
-  font-weight:700;letter-spacing:-.04em;line-height:.88;
+#bg3d {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%;
+  image-rendering: pixelated;
+  opacity: .48; z-index: 0;
 }
-.svc-h .hollow{-webkit-text-stroke:1.5px rgba(242,237,230,.2);color:transparent;}
-.svc-intro{
-  font-size:.88rem;font-weight:400;
-  color:rgba(242,237,230,.32);line-height:1.75;
-  max-width:300px;align-self:flex-end;
+.hero-vignette {
+  position: absolute; inset: 0; z-index: 1; pointer-events: none;
+  background: radial-gradient(ellipse 65% 75% at 50% 50%, transparent 40%, rgba(8,6,16,.65) 100%);
 }
-/* Service rows — full width, huge typography */
-.svc-rows{display:flex;flex-direction:column;gap:0;}
-.svc-row{
-  display:grid;grid-template-columns:56px 1fr auto;
-  align-items:center;gap:1.5rem;
-  padding:1.2rem 0;
-  border-top:1px solid rgba(242,237,230,.06);
-  position:relative;overflow:hidden;cursor:none;
-  transition:background .18s;
+/* fade hero into the sections below */
+#hero::after {
+  content: '';
+  position: absolute; bottom: 0; left: 0; right: 0;
+  height: 180px;
+  background: linear-gradient(to bottom, transparent, var(--bg));
+  z-index: 1; pointer-events: none;
 }
-.svc-row:last-child{border-bottom:1px solid rgba(242,237,230,.06);}
-.svc-row::before{
-  content:'';position:absolute;left:0;top:0;bottom:0;
-  width:3px;background:var(--or);
-  transform:scaleY(0);transform-origin:top;
-  transition:transform .28s var(--snap);
-}
-.svc-row:hover::before{transform:scaleY(1);}
-.svc-row:hover .sv-name{color:var(--or);}
-.svc-row:hover .sv-arrow{opacity:1;transform:translate(3px,-3px);}
-.sv-n{font-size:1.6rem;font-weight:700;color:rgba(242,237,230,.07);letter-spacing:-.02em;line-height:1;}
-.sv-name{
-  font-size:clamp(1.1rem,2.2vw,2rem);font-weight:600;
-  letter-spacing:-.02em;color:rgba(242,237,230,.85);
-  transition:color .2s;
-}
-.sv-tags{display:flex;gap:.32rem;flex-wrap:wrap;margin-top:.3rem;}
-.sv-tag{
-  font-size:.52rem;font-weight:500;letter-spacing:.08em;
-  background:rgba(255,77,0,.1);border:1px solid rgba(255,77,0,.18);
-  color:rgba(255,77,0,.7);padding:.13rem .42rem;
-}
-.sv-arrow{font-size:1rem;color:var(--or);opacity:.15;transition:all .22s;}
-/* process strip */
-.proc-strip{
-  display:grid;grid-template-columns:repeat(3,1fr);gap:0;
-  border-top:1px solid rgba(242,237,230,.06);
-}
-.proc-cell{padding:.9rem 0 0;border-right:1px solid rgba(242,237,230,.06);padding-right:2rem;margin-right:2rem;}
-.proc-cell:last-child{border-right:none;margin-right:0;padding-right:0;}
-.proc-n{font-size:1.2rem;font-weight:700;color:rgba(255,77,0,.2);letter-spacing:-.02em;margin-bottom:.2rem;}
-.proc-t{font-size:.78rem;font-weight:600;color:rgba(242,237,230,.65);margin-bottom:.2rem;}
-.proc-d{font-size:.72rem;font-weight:400;color:rgba(242,237,230,.28);line-height:1.6;}
-
-/* ══════════════════════════
-   SLIDE 3 — PROJECTS CATALOGUE
-══════════════════════════ */
-#s3{background:var(--lt);color:var(--dk);}
-.proj-inner{
-  height:100%;
-  display:grid;grid-template-rows:auto 1fr;
-  overflow:hidden;
-}
-.proj-header{
-  padding:3.5rem 4rem 1.5rem;
-  display:flex;align-items:flex-end;justify-content:space-between;
-  border-bottom:1px solid rgba(13,13,13,.08);
-  flex-shrink:0;
-}
-.proj-h{
-  font-size:clamp(2.2rem,4.5vw,5.5rem);
-  font-weight:700;letter-spacing:-.04em;line-height:.9;
-}
-.proj-h .or{color:var(--or);}
-.proj-count{
-  font-size:.62rem;font-weight:500;letter-spacing:.14em;
-  text-transform:uppercase;color:rgba(13,13,13,.3);
-  padding-bottom:.3rem;
+.hero-content {
+  position: relative; z-index: 2;
+  padding-top: 100px; padding-bottom: 80px;
+  will-change: transform, opacity;
+  display: flex; flex-direction: column; align-items: center;
+  text-align: center;
 }
 
-/* Catalogue grid */
-.proj-grid{
-  display:grid;
-  grid-template-columns:repeat(4,1fr);
-  grid-template-rows:repeat(2,1fr);
-  gap:1px;
-  background:rgba(13,13,13,.08);
-  overflow:hidden;
+/* hero elements cascade in after CRT boot */
+@keyframes fade-up {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: none; }
+}
+.hero-eyebrow { animation: fade-up .48s .62s both; }
+h1.hero-name  { animation: fade-up .55s .78s both; }
+.hero-desc    { animation: fade-up .48s .96s both; }
+.hero-scroll  { animation: fade-up .4s  1.5s  both; }
+
+.hero-eyebrow {
+  display: flex; align-items: center; gap: 12px;
+  font-size: 12px; font-weight: 600;
+  letter-spacing: .12em; text-transform: uppercase;
+  color: var(--red);
+  margin-bottom: 22px;
+}
+.hero-eyebrow::before {
+  content: '';
+  display: block; width: 30px; height: 2px;
+  background: var(--red); flex-shrink: 0;
+}
+h1.hero-name {
+  font-family: var(--px);
+  font-size: clamp(2.2rem, 7.2vw, 6.4rem);
+  line-height: 1.18; letter-spacing: -.01em;
+  color: var(--ink);
+  margin-bottom: 26px;
+  text-shadow: 0 2px 28px rgba(8,6,16,.9);
+}
+.hero-desc {
+  font-size: clamp(14px, 1.7vw, 17px);
+  color: rgba(243,240,234,.76);
+  max-width: 440px; line-height: 1.85;
+  margin-bottom: 0;
+  text-shadow: 0 1px 16px rgba(8,6,16,.85);
 }
 
-/* Tile */
-.pt{
-  background:var(--lt);
-  position:relative;overflow:hidden;
-  cursor:none;
-  /* staggered entrance — set via JS */
-  opacity:0;
-  transform:translateY(24px) scale(.97);
-  transition:background .25s, opacity .55s var(--ease), transform .55s var(--ease);
+/* cascading chevron scroll cue */
+.hero-scroll {
+  position: absolute; bottom: 36px; left: 0; right: 0;
+  z-index: 4;
+  display: flex; flex-direction: column; align-items: center; gap: 10px;
+  text-decoration: none;
+  animation: fade-up .4s 1.5s both;
+  color: var(--muted);
 }
-.pt.visible{opacity:1;transform:none;}
-.pt:hover{background:var(--dk);}
-.pt:hover .pt-num{color:rgba(255,77,0,.15);}
-.pt:hover .pt-name{color:var(--lt);}
-.pt:hover .pt-badge{filter:brightness(1.2);}
-.pt:hover .pt-arrow{opacity:1;transform:translate(3px,-3px);}
-.pt:hover .pt-tags span{background:rgba(255,77,0,.12);border-color:rgba(255,77,0,.22);color:rgba(255,77,0,.8);}
-
-/* orange sweep on hover */
-.pt::before{
-  content:'';position:absolute;top:0;left:0;right:0;height:2px;
-  background:var(--or);box-shadow:0 0 10px var(--or);
-  transform:scaleX(0);transform-origin:left;
-  transition:transform .32s var(--ease);z-index:2;
+.scroll-label {
+  font-size: 9px; font-weight: 600;
+  letter-spacing: .2em; text-transform: uppercase;
 }
-.pt:hover::before{transform:scaleX(1);}
-
-.pt-inner{padding:1.5rem;height:100%;display:flex;flex-direction:column;gap:.5rem;}
-.pt-top{display:flex;align-items:flex-start;justify-content:space-between;}
-.pt-num{
-  font-size:2.2rem;font-weight:700;letter-spacing:-.04em;
-  color:rgba(13,13,13,.06);line-height:1;
-  transition:color .25s;
+.scroll-arr {
+  display: flex; flex-direction: column; align-items: center; gap: 4px;
 }
-.pt-arrow{
-  font-size:.85rem;color:var(--or);
-  opacity:0;transition:all .22s;
-  flex-shrink:0;
+.scroll-arr i {
+  display: block; width: 12px; height: 12px;
+  border-right: 2px solid currentColor;
+  border-bottom: 2px solid currentColor;
+  transform: rotate(45deg);
+  opacity: 0;
+  animation: arr-wave 1.9s ease-in-out infinite;
 }
-.pt-badge{
-  font-size:.5rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;
-  padding:.13rem .42rem;display:inline-block;margin-bottom:.2rem;
-  transition:filter .25s;
-}
-.b-live{background:rgba(0,200,80,.12);color:#1a8a40;border:1px solid rgba(0,200,80,.25);}
-.b-client{background:rgba(60,120,255,.1);color:#1a40a0;border:1px solid rgba(60,120,255,.22);}
-.b-hack{background:rgba(140,60,255,.1);color:#5a1a9a;border:1px solid rgba(140,60,255,.22);}
-.b-pers{background:rgba(220,140,0,.1);color:#7a4800;border:1px solid rgba(220,140,0,.22);}
-.pt-name{
-  font-size:clamp(.9rem,1.4vw,1.15rem);font-weight:700;
-  letter-spacing:-.02em;color:var(--dk);line-height:1.1;
-  transition:color .25s;flex:1;
-}
-.pt-tags{display:flex;flex-wrap:wrap;gap:.25rem;margin-top:auto;}
-.pt-tags span{
-  font-size:.5rem;font-weight:500;
-  background:rgba(13,13,13,.05);border:1px solid rgba(13,13,13,.09);
-  color:rgba(13,13,13,.4);padding:.12rem .38rem;letter-spacing:.04em;
-  transition:all .25s;
+.scroll-arr i:nth-child(1) { animation-delay: 0s; }
+.scroll-arr i:nth-child(2) { animation-delay: .22s; }
+.scroll-arr i:nth-child(3) { animation-delay: .44s; }
+@keyframes arr-wave {
+  0%,100% { opacity: .12; }
+  40%     { opacity: .85; }
 }
 
-/* ── PROJECT OVERLAY ── */
-#proj-overlay{
-  position:fixed;inset:0;z-index:500;
-  display:flex;align-items:center;justify-content:center;
-  pointer-events:none;
+/* ── Section base ───────────────────────── */
+section.ms {
+  padding: clamp(72px, 10vw, 120px) 0;
+  border-top: 1px solid var(--border);
+  position: relative;
+  overflow: hidden;
 }
-#proj-overlay-bg{
-  position:absolute;inset:0;
-  background:rgba(13,13,13,.7);
-  backdrop-filter:blur(10px);
-  opacity:0;transition:opacity .35s ease;
+/* ghost section number watermark */
+section.ms::before {
+  font-family: var(--px);
+  font-size: min(26vw, 360px);
+  line-height: 1;
+  position: absolute; top: -0.05em; right: clamp(-20px, -1vw, 0px);
+  color: transparent;
+  -webkit-text-stroke: 1px rgba(255,255,255,.028);
+  pointer-events: none; user-select: none;
+  z-index: 0; white-space: nowrap;
 }
-#proj-overlay-card{
-  position:relative;z-index:1;
-  width:min(620px,90vw);
-  background:var(--lt);
-  padding:2.8rem;
-  transform:scale(.88) translateY(20px);
-  opacity:0;
-  transition:transform .45s cubic-bezier(.16,1,.3,1), opacity .35s ease;
+#work::before   { content: '01'; }
+#about::before  { content: '02'; }
+#contact::before { content: '03'; }
+/* ambient glow per section */
+#work   { background: radial-gradient(ellipse 65% 55% at 88% 65%, rgba(255,77,82,.05) 0%, transparent 65%); }
+#about  { background: radial-gradient(ellipse 55% 65% at 12% 50%, rgba(255,77,82,.044) 0%, transparent 65%); }
+#contact { background: radial-gradient(ellipse 70% 50% at 50% 15%, rgba(255,77,82,.05) 0%, transparent 65%); }
+.sec-head {
+  display: flex; align-items: baseline; gap: 16px;
+  margin-bottom: clamp(36px, 5vw, 58px);
+  overflow: hidden; /* clip for wipe */
 }
-#proj-overlay.open{pointer-events:all;}
-#proj-overlay.open #proj-overlay-bg{opacity:1;}
-#proj-overlay.open #proj-overlay-card{transform:none;opacity:1;}
+.sec-num {
+  font-family: var(--px); font-size: 9px;
+  color: var(--red); flex-shrink: 0;
+  opacity: 0; transform: translateY(4px);
+  transition: opacity .25s, transform .25s;
+}
+.sec-head--in .sec-num { opacity: 1; transform: none; }
+.sec-title {
+  font-family: var(--px);
+  font-size: clamp(1rem, 2.8vw, 1.8rem);
+  color: var(--ink);
+  /* wipe in from left */
+  clip-path: inset(0 105% 0 0);
+  transition: clip-path .65s .12s cubic-bezier(.16,1,.3,1);
+}
+.sec-head--in .sec-title { clip-path: inset(0 0% 0 0); }
 
-.ov-close{
-  position:absolute;top:1.2rem;right:1.2rem;
-  width:32px;height:32px;
-  display:flex;align-items:center;justify-content:center;
-  font-size:1rem;color:rgba(13,13,13,.35);
-  cursor:none;border:1px solid rgba(13,13,13,.1);
-  transition:all .2s;background:transparent;
-}
-.ov-close:hover{background:var(--or);border-color:var(--or);color:#fff;}
-.ov-badge{font-size:.54rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;padding:.15rem .5rem;display:inline-block;margin-bottom:1rem;}
-.ov-num{font-size:.6rem;font-weight:500;color:rgba(13,13,13,.25);letter-spacing:.14em;margin-bottom:.3rem;}
-.ov-title{
-  font-size:clamp(1.6rem,4vw,2.8rem);font-weight:700;
-  letter-spacing:-.04em;color:var(--dk);line-height:.9;
-  margin-bottom:1.2rem;
-}
-.ov-title .or{color:var(--or);}
-.ov-desc{font-size:.9rem;font-weight:400;color:rgba(13,13,13,.55);line-height:1.78;margin-bottom:1.4rem;}
-.ov-stack{display:flex;flex-wrap:wrap;gap:.35rem;margin-bottom:1.8rem;}
-.ov-tag{
-  font-size:.6rem;font-weight:500;
-  background:var(--dk);color:var(--lt);
-  padding:.2rem .55rem;letter-spacing:.05em;
-}
-.ov-link{
-  display:inline-flex;align-items:center;gap:.5rem;
-  font-size:.68rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;
-  background:var(--or);color:#fff;padding:.65rem 1.4rem;
-  transition:background .2s;cursor:none;
-}
-.ov-link:hover{background:var(--or2);}
-.ov-rule{height:1px;background:rgba(13,13,13,.08);margin-bottom:1.4rem;}
+/* ── Scroll reveal — base + per-section ─── */
+.reveal { opacity: 0; }
 
-/* ══════════════════════════
-   SLIDE 4 — SKILLS
-══════════════════════════ */
-#s4{background:var(--or);}
-.sk-inner{
-  height:100%;padding:5rem 4rem;
-  display:grid;grid-template-rows:auto 1fr auto;
-  gap:2rem;overflow:hidden;
+/* fallback for any reveal without a section override */
+@keyframes card-in {
+  0%   { opacity: 0; transform: translateY(20px); }
+  62%  { opacity: 1; transform: translateY(-4px); }
+  100% { opacity: 1; transform: none; }
 }
-.sk-h{
-  font-size:clamp(3.5rem,7vw,9rem);
-  font-weight:700;letter-spacing:-.05em;line-height:.84;color:#fff;
-}
-.sk-h .hollow{-webkit-text-stroke:2px rgba(255,255,255,.3);color:transparent;}
-.sk-grid{
-  display:grid;grid-template-columns:repeat(4,1fr);
-  gap:1px;background:rgba(255,255,255,.2);
-  align-content:start;
-}
-.sk-cell{
-  background:var(--or);padding:2rem 1.6rem;
-  transition:background .2s;position:relative;overflow:hidden;
-}
-.sk-cell:hover{background:rgba(255,255,255,.12);}
-.sk-cell-n{
-  font-size:.55rem;font-weight:600;letter-spacing:.18em;
-  color:rgba(255,255,255,.3);margin-bottom:.8rem;
-}
-.sk-cell-name{font-size:1.1rem;font-weight:700;color:#fff;margin-bottom:.4rem;letter-spacing:-.02em;}
-.sk-cell-desc{font-size:.76rem;font-weight:400;color:rgba(255,255,255,.55);line-height:1.6;margin-bottom:.8rem;}
-.sk-tools{display:flex;flex-wrap:wrap;gap:.28rem;}
-.sk-tool{
-  font-size:.58rem;font-weight:500;
-  background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2);
-  color:rgba(255,255,255,.7);padding:.18rem .5rem;letter-spacing:.05em;
-  transition:all .18s;
-}
-.sk-tool:hover{background:#fff;color:var(--or);}
-.sk-footer{
-  display:flex;align-items:center;justify-content:space-between;
-  border-top:1px solid rgba(255,255,255,.2);padding-top:1.2rem;
-}
-.sk-footer-txt{font-size:.78rem;font-weight:500;color:rgba(255,255,255,.45);}
-.sk-footer-txt strong{color:#fff;}
-.sk-cv{
-  font-size:.65rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;
-  background:#fff;color:var(--or);padding:.55rem 1.2rem;
-  transition:all .2s;cursor:none;
-}
-.sk-cv:hover{background:var(--dk);color:#fff;}
+.reveal.vis { animation: card-in .52s var(--d,0s) ease-out both; }
 
-/* ══════════════════════════
-   SLIDE 5 — CONTACT
-══════════════════════════ */
-#s5{background:var(--dk);}
-.ct-inner{
-  height:100%;padding:5rem 4rem;
-  display:grid;grid-template-columns:1fr 1fr;
-  gap:4rem;align-content:center;
-  align-items:center;
+/* Work — horizontal print scan (clip-path wipe, like data streaming in) */
+@keyframes work-print {
+  0%   { clip-path: inset(0 100% 0 0); opacity: 0; }
+  14%  { opacity: 1; }
+  100% { clip-path: inset(0 0% 0 0); opacity: 1; }
 }
-.ct-left{}
-.ct-big{
-  font-size:clamp(3.5rem,7vw,9.5rem);
-  font-weight:700;letter-spacing:-.05em;line-height:.84;
-  margin-bottom:2rem;
+.wcard.reveal.vis {
+  animation: work-print .5s var(--d,0s) ease-out both;
 }
-.ct-big .or{color:var(--or);}
-.ct-big .hollow{-webkit-text-stroke:1.5px rgba(242,237,230,.18);color:transparent;}
-.ct-sub{
-  font-size:.93rem;font-weight:400;
-  color:rgba(242,237,230,.38);line-height:1.8;margin-bottom:2.2rem;
-}
-.ct-email{
-  display:block;font-size:clamp(.85rem,2vw,1.3rem);font-weight:600;
-  color:var(--lt);border-bottom:2px solid var(--or);padding-bottom:.2rem;
-  width:fit-content;transition:color .2s;letter-spacing:-.01em;
-}
-.ct-email:hover{color:var(--or);}
-.ct-right{display:flex;flex-direction:column;gap:1.2rem;}
-.ct-avail{
-  background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);
-  padding:2rem;position:relative;
-}
-.ct-avail::before,.ct-avail::after{
-  content:'';position:absolute;width:16px;height:16px;
-}
-.ct-avail::before{top:0;left:0;border-top:2px solid var(--or);border-left:2px solid var(--or);}
-.ct-avail::after{bottom:0;right:0;border-bottom:2px solid var(--or);border-right:2px solid var(--or);}
-.ct-avail-t{font-size:1rem;font-weight:700;color:var(--lt);margin-bottom:.4rem;letter-spacing:-.01em;}
-.ct-avail-b{font-size:.8rem;font-weight:400;color:rgba(242,237,230,.3);line-height:1.72;margin-bottom:.9rem;}
-.ct-avail-b strong{color:rgba(242,237,230,.7);}
-.ct-avail-status{font-size:.6rem;font-weight:500;letter-spacing:.1em;color:var(--or);display:flex;align-items:center;gap:.4rem;}
-.ct-avail-status::before{content:'';width:6px;height:6px;border-radius:50%;background:#4ade80;box-shadow:0 0 7px #4ade80;animation:blink 2.5s ease-in-out infinite;}
-.socials{display:flex;flex-direction:column;gap:.45rem;}
-.soc{
-  display:flex;align-items:center;gap:.8rem;
-  padding:.72rem .9rem;border:1px solid rgba(255,255,255,.06);
-  color:rgba(242,237,230,.4);font-size:.82rem;font-weight:500;
-  transition:all .2s;cursor:none;
-}
-.soc:hover{background:var(--or);border-color:var(--or);color:#fff;transform:translateX(5px);}
-.soc i{width:14px;font-size:.8rem;}
-.soc-h{margin-left:auto;font-size:.56rem;color:rgba(242,237,230,.2);letter-spacing:.06em;transition:color .2s;}
-.soc:hover .soc-h{color:rgba(255,255,255,.6);}
 
-/* ─── MOBILE ─── */
-@media(max-width:768px){
-  #container{position:static;}
-  html,body{overflow:auto;height:auto;}
-  .slide{position:static;width:100%;height:auto;min-height:100svh;}
-  #progress,#arrow-prev,#arrow-next,.hero-scroll-hint{display:none;}
-  .hero-wrap{padding:5rem 1.5rem 4rem;}
-  .hero-bg-word{display:none;}
-  .hero-foot{flex-direction:column;align-items:flex-start;gap:1.5rem;}
-  .about-inner{grid-template-columns:1fr;}
-  .about-photo-col{height:50vw;max-height:340px;}
-  .about-content{padding:3rem 1.5rem;}
-  .svc-inner,.sk-inner,.ct-inner,.proj-inner{padding:4rem 1.5rem;}
-  .svc-header{flex-direction:column;align-items:flex-start;gap:1rem;}
-  .sk-grid{grid-template-columns:1fr 1fr;}
-  .ct-inner{grid-template-columns:1fr;}
-  .proc-strip{grid-template-columns:1fr;}
-  .proc-cell{border-right:none;border-bottom:1px solid rgba(242,237,230,.06);padding:0 0 1rem;margin:.8rem 0 0;}
-  .proj-header{padding:3rem 1.5rem 1.5rem;}
-  .nav-dot,.slide-counter{display:none;}
+/* About — single panel slides in from right */
+@keyframes about-slide {
+  from { opacity: 0; transform: translateX(42px); }
+  to   { opacity: 1; transform: none; }
 }
-@media(max-width:480px){
-  .hero-name{font-size:clamp(3.2rem,13vw,5.5rem);}
-  .sk-grid{grid-template-columns:1fr;}
-  .about-stats{flex-wrap:wrap;}
+.about-grid.reveal.vis {
+  animation: about-slide .58s .04s cubic-bezier(.16,1,.3,1) both;
 }
+
+/* Contact — rises from below, slower settle */
+@keyframes contact-rise {
+  from { opacity: 0; transform: translateY(48px); }
+  to   { opacity: 1; transform: none; }
+}
+.contact-inner.reveal.vis {
+  animation: contact-rise .62s .04s cubic-bezier(.22,1,.36,1) both;
+}
+
+/* ── Work grid ──────────────────────────── */
+.work-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+}
+.wcard {
+  position: relative; overflow: hidden;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  box-shadow: var(--sh);
+  padding: 24px 26px 22px;
+  display: flex; flex-direction: column; gap: 12px;
+  transition: transform .14s, border-color .14s, box-shadow .14s;
+}
+/* top edge draws on hover — the key retro micro-interaction */
+.wcard::before {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0; height: 2px;
+  background: var(--red);
+  transform: scaleX(0); transform-origin: left;
+  transition: transform .22s ease-out;
+}
+.wcard:hover::before { transform: scaleX(1); }
+.wcard:hover {
+  transform: translate(-2px,-2px);
+  border-color: var(--red);
+  box-shadow: 6px 6px 0 var(--line);
+}
+.wcard.feat { grid-column: span 2; }
+
+.wcard-top {
+  display: flex; align-items: center; justify-content: space-between;
+}
+.badge {
+  font-size: 10px; font-weight: 700;
+  letter-spacing: .07em; text-transform: uppercase;
+  padding: 2px 8px; border: 1.5px solid;
+}
+.b-client{ color: #f5a623;       border-color: #f5a623; }
+.b-hack  { color: var(--red);    border-color: var(--red); }
+.b-pers  { color: var(--muted);  border-color: var(--dim); }
+.wcard-n { font-family: var(--px); font-size: 8px; color: var(--dim); }
+.wcard-title { font-size: 17px; font-weight: 700; color: var(--ink); line-height: 1.3; }
+.wcard.feat .wcard-title { font-size: 20px; }
+.wcard-desc { font-size: 13px; color: var(--muted); line-height: 1.75; flex: 1; }
+.wcard-tags { display: flex; flex-wrap: wrap; gap: 5px; }
+.wtag {
+  font-size: 10px; font-weight: 600;
+  letter-spacing: .05em; text-transform: uppercase;
+  color: var(--dim);
+  padding: 2px 7px;
+  background: rgba(255,255,255,.03);
+  border: 1px solid var(--border);
+}
+.wcard-link {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-size: 11px; font-weight: 600;
+  letter-spacing: .08em; text-transform: uppercase;
+  color: var(--red); margin-top: 2px;
+  transition: gap .14s;
+}
+.wcard:hover .wcard-link { gap: 10px; }
+
+/* ── About ──────────────────────────────── */
+.about-grid {
+  display: grid;
+  grid-template-columns: 260px 1fr;
+  gap: clamp(36px, 6vw, 80px);
+  align-items: start;
+}
+.about-photo { position: relative; }
+.about-photo img {
+  width: 100%; aspect-ratio: 1; object-fit: cover;
+  filter: grayscale(25%);
+  border: 1px solid var(--border);
+  box-shadow: var(--sh);
+  transition: filter .35s;
+}
+.about-photo:hover img { filter: grayscale(0); }
+/* corner bracket draws in when section enters */
+.about-photo::before {
+  content: '';
+  position: absolute; top: -7px; left: -7px;
+  width: 0; height: 0;
+  border-top: 2px solid var(--red);
+  border-left: 2px solid var(--red);
+  pointer-events: none; z-index: 1;
+  transition: width .45s .42s ease, height .45s .68s ease;
+}
+.about-grid.vis .about-photo::before {
+  width: calc(100% + 7px);
+  height: calc(100% + 7px);
+}
+.about-photo-name {
+  font-family: var(--px); font-size: 8px;
+  color: var(--dim); margin-top: 14px; letter-spacing: .04em;
+}
+.about-body p {
+  font-size: 15px; color: var(--muted);
+  line-height: 1.85; margin-bottom: 14px;
+}
+.about-body p strong { color: var(--ink); font-weight: 600; }
+.skills { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 26px; margin-bottom: 28px; }
+.stag {
+  font-size: 11px; font-weight: 600;
+  letter-spacing: .05em; text-transform: uppercase;
+  padding: 4px 12px;
+  border: 1px solid var(--border);
+  color: var(--muted);
+  background: rgba(255,255,255,.02);
+  transition: border-color .16s, color .16s;
+}
+.stag:hover { border-color: var(--muted); color: var(--ink); }
+.stag.hi { border-color: rgba(255,77,82,.38); color: var(--ink); background: rgba(255,77,82,.06); }
+.cv-btn {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 11px 20px;
+  border: 2px solid var(--border);
+  font-size: 11px; font-weight: 600;
+  letter-spacing: .08em; text-transform: uppercase;
+  color: var(--muted); box-shadow: var(--sh);
+  transition: border-color .16s, color .16s, transform .14s, box-shadow .14s;
+}
+.cv-btn:hover { border-color: var(--ink); color: var(--ink); transform: translate(-1px,-1px); box-shadow: 5px 5px 0 var(--line); }
+
+/* ── Contact ────────────────────────────── */
+.contact-inner { max-width: 600px; }
+.contact-heading {
+  font-family: var(--ui); font-style: italic; font-weight: 700;
+  font-size: clamp(2rem, 5vw, 3.4rem);
+  color: var(--ink); line-height: 1.2; margin-bottom: 18px;
+}
+.contact-heading em { color: var(--red); font-style: normal; }
+.contact-sub {
+  font-size: 15px; color: var(--muted);
+  line-height: 1.85; margin-bottom: 32px; max-width: 420px;
+}
+/* block cursor blink — CSS only, no JS */
+.contact-email {
+  display: inline-block;
+  font-family: var(--px);
+  font-size: clamp(8px, 1.5vw, 11px);
+  color: var(--red); padding: 14px 22px;
+  border: 2px solid var(--red); box-shadow: var(--sh);
+  margin-bottom: 28px; letter-spacing: .04em;
+  transition: background .18s, color .18s;
+}
+.contact-email::after {
+  content: ' █';
+  animation: cur-blink .9s steps(1) infinite;
+  font-size: .88em;
+}
+@keyframes cur-blink { 50%{opacity:0} }
+.contact-email:hover { background: var(--red); color: #fff; }
+.socials { display: flex; gap: 12px; flex-wrap: wrap; }
+.slink {
+  display: flex; align-items: center; gap: 9px;
+  padding: 9px 16px;
+  border: 1px solid var(--border); font-size: 12px; font-weight: 500;
+  color: var(--muted); box-shadow: 3px 3px 0 var(--line);
+  transition: border-color .14s, color .14s, transform .14s, box-shadow .14s;
+}
+.slink:hover { border-color: var(--ink); color: var(--ink); transform: translate(-1px,-1px); box-shadow: 4px 4px 0 var(--line); }
+.slink svg { width: 15px; height: 15px; flex-shrink: 0; }
+
+/* ── Footer ─────────────────────────────── */
+footer { border-top: 1px solid var(--border); padding: 28px 0; }
+.footer-inner {
+  display: flex; align-items: center;
+  justify-content: space-between; flex-wrap: wrap; gap: 10px;
+}
+.footer-brand { font-family: var(--px); font-size: 9px; color: var(--dim); }
+.footer-brand b { color: var(--red); font-weight: 400; }
+.footer-copy { font-size: 12px; color: var(--dim); }
+
+/* ── Responsive ─────────────────────────── */
+@media (max-width: 960px) {
+  .work-grid { grid-template-columns: repeat(2,1fr); }
+  .wcard.feat { grid-column: span 2; }
+}
+@media (max-width: 640px) {
+  .nav-links { gap: 16px; }
+  .nav-links a:not(.nav-cta) { font-size: 11px; }
+  .work-grid { grid-template-columns: 1fr; }
+  .wcard.feat { grid-column: span 1; }
+  .about-grid { grid-template-columns: 1fr; }
+  .about-photo { max-width: 200px; }
+  h1.hero-name { line-height: 1.28; }
+}
+@media (max-width: 420px) {
+  .nav-links a:not(.nav-cta):not(:last-of-type) { display: none; }
+}
+
 </style>
 </head>
 <body>
 
-<div id="cur"></div>
-<div id="progress"></div>
+<!-- CRT boot flash -->
+<div id="crt-boot" aria-hidden="true"></div>
 
+<!-- Tetris background — fixed, behind all section content -->
+<canvas id="tetris-cv" aria-hidden="true"></canvas>
+
+<!-- Battle canvas — fixed, flies over portfolio section -->
+<canvas id="battle-cv" aria-hidden="true"></canvas>
+
+<!-- ══ NAV ══ -->
 <nav id="nav">
-  <div class="nav-logo">CG<em>.</em></div>
-  <div class="nav-right">
-    <div class="nav-slide-hints" id="dots"></div>
-    <div class="slide-counter"><span id="sc-cur">01</span> / <span id="sc-tot">06</span></div>
-    <a href="#" class="nav-cta" id="nav-cta-btn">Hire Me</a>
+  <a href="#" class="nav-brand">CG<b>.</b></a>
+  <div class="nav-sp"></div>
+  <div class="nav-links">
+    <a href="#work">Work</a>
+    <a href="#about">About</a>
+    <a href="#contact">Contact</a>
+    <a href="mailto:cristian.gannaban24@gmail.com" class="nav-cta">Hire Me</a>
   </div>
 </nav>
 
-<div id="arrow-prev" class="slide-arrow hidden">←</div>
-<div id="arrow-next" class="slide-arrow">→</div>
+<!-- ══ HERO ══ -->
+<section id="hero">
+  <canvas id="bg3d" aria-hidden="true"></canvas>
+  <div class="hero-vignette" aria-hidden="true"></div>
+  <div class="hero-content wrap">
+    <p class="hero-eyebrow">Developer &amp; Data Specialist</p>
+    <h1 class="hero-name">CRISTIAN<br>GANNABAN</h1>
+    <p class="hero-desc">Building production-ready web apps and data tools.<br>Based in Manila, available worldwide.</p>
+  </div>
+  <a href="#work" class="hero-scroll" aria-label="Scroll to work">
+    <span class="scroll-label">scroll</span>
+    <span class="scroll-arr"><i></i><i></i><i></i></span>
+  </a>
+</section>
 
-<div id="container">
+<!-- ══ WORK ══ -->
+<section id="work" class="ms">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="sec-num">01</span>
+      <h2 class="sec-title">Work</h2>
+    </div>
+    <div class="work-grid">
 
-  <!-- ══ SLIDE 0: HERO ══ -->
-  <div class="slide" id="s0">
-    <div class="hero-wrap">
-      <div class="hero-bg-word">BUILD</div>
-      <div class="hero-tag">
-        <div class="avail">Open to work</div>
-        Manila, PH — 2025
-      </div>
-      <h1 class="hero-name">
-        <span class="line">CRISTIAN</span>
-        <span class="line accent">GANNABAN</span>
-        <span class="line hollow">BUILDS.</span>
-      </h1>
-      <div class="hero-foot">
-        <p class="hero-desc">
-          <strong>Developer & Data Specialist</strong> — websites, web apps, and data tools. Fast, considered, made to last.
-        </p>
-        <div class="hero-btns">
-          <a class="btn btn-or" id="go-work">See My Work →</a>
-          <a href="GANNABAN-CV.pdf" download class="btn btn-gh">↓ CV</a>
+      <article class="wcard feat reveal" style="--d:.04s">
+        <div class="wcard-top">
+          <span class="wcard-n">★</span>
         </div>
-      </div>
-      <div class="hero-scroll-hint">Scroll or use arrows</div>
+        <div class="wcard-title">Nippon Hasha Survey</div>
+        <p class="wcard-desc">Full-stack survey platform built for a real company — handling real data every day.</p>
+        <div class="wcard-tags">
+          <span class="wtag">Full Stack</span><span class="wtag">JavaScript</span>
+          <span class="wtag">SQL</span><span class="wtag">Auth</span>
+        </div>
+        <a href="https://survey.nipponhasha.com" target="_blank" rel="noopener" class="wcard-link">Visit Project ↗</a>
+      </article>
+
+      <article class="wcard reveal" style="--d:.09s">
+        <div class="wcard-top">
+          <span class="wcard-n">07</span>
+        </div>
+        <div class="wcard-title">CG.dev</div>
+        <p class="wcard-desc">Document management app for freelancers — quotations, invoices, proposals. Auth, activity tracking, import/export.</p>
+        <div class="wcard-tags">
+          <span class="wtag">JavaScript</span><span class="wtag">Web App</span>
+          <span class="wtag">UI/UX</span><span class="wtag">Auth</span>
+        </div>
+        <a href="https://crstntaro.github.io/CG.dev/" target="_blank" rel="noopener" class="wcard-link">Visit Project ↗</a>
+      </article>
+
+      <article class="wcard reveal" style="--d:.14s">
+        <div class="wcard-top">
+          <span class="badge b-client">Client</span>
+          <span class="wcard-n">01</span>
+        </div>
+        <div class="wcard-title">Twistara</div>
+        <p class="wcard-desc">E-commerce platform commissioned and delivered for a client. Products, cart, checkout — built to convert.</p>
+        <div class="wcard-tags">
+          <span class="wtag">HTML</span><span class="wtag">CSS</span><span class="wtag">JavaScript</span>
+        </div>
+        <a href="https://crstntaro.github.io/Twistara" target="_blank" rel="noopener" class="wcard-link">Visit Project ↗</a>
+      </article>
+
+      <article class="wcard reveal" style="--d:.19s">
+        <div class="wcard-top">
+          <span class="badge b-client">Client</span>
+          <span class="wcard-n">02</span>
+        </div>
+        <div class="wcard-title">Bambrella</div>
+        <p class="wcard-desc">Commissioned e-commerce storefront for a small business. Polished design, delivered to spec.</p>
+        <div class="wcard-tags">
+          <span class="wtag">HTML</span><span class="wtag">CSS</span><span class="wtag">JavaScript</span>
+        </div>
+        <a href="https://crstntaro.github.io/Bambrella" target="_blank" rel="noopener" class="wcard-link">Visit Project ↗</a>
+      </article>
+
+      <article class="wcard reveal" style="--d:.24s">
+        <div class="wcard-top">
+          <span class="badge b-hack">Hackathon</span>
+          <span class="wcard-n">03</span>
+        </div>
+        <div class="wcard-title">BoneAppetite</div>
+        <p class="wcard-desc">Dog-friendly restaurant locator built under hackathon pressure. Real-time maps via Leaflet + Google Maps API.</p>
+        <div class="wcard-tags">
+          <span class="wtag">JavaScript</span><span class="wtag">Leaflet</span><span class="wtag">Maps API</span>
+        </div>
+        <a href="https://crstntaro.github.io/SajaBoysRepo" target="_blank" rel="noopener" class="wcard-link">Visit Project ↗</a>
+      </article>
+
+      <article class="wcard reveal" style="--d:.29s">
+        <div class="wcard-top">
+          <span class="badge b-client">Client</span>
+          <span class="wcard-n">04</span>
+        </div>
+        <div class="wcard-title">Navitas</div>
+        <p class="wcard-desc">Company portfolio site for a freelance client. Clean, professional, delivered to spec.</p>
+        <div class="wcard-tags">
+          <span class="wtag">HTML</span><span class="wtag">CSS</span>
+        </div>
+        <a href="https://crstntaro.github.io/navitas" target="_blank" rel="noopener" class="wcard-link">Visit Project ↗</a>
+      </article>
+
+      <article class="wcard reveal" style="--d:.34s">
+        <div class="wcard-top">
+          <span class="badge b-pers">Personal</span>
+          <span class="wcard-n">05</span>
+        </div>
+        <div class="wcard-title">Wordle Clone</div>
+        <p class="wcard-desc">Faithful recreation of the viral word game, built from scratch in pure JavaScript — zero libraries.</p>
+        <div class="wcard-tags">
+          <span class="wtag">JavaScript</span><span class="wtag">Game Dev</span>
+        </div>
+        <a href="https://crstntaro.github.io/wordle-clone" target="_blank" rel="noopener" class="wcard-link">Visit Project ↗</a>
+      </article>
+
+      <article class="wcard reveal" style="--d:.39s">
+        <div class="wcard-top">
+          <span class="badge b-pers">Personal</span>
+          <span class="wcard-n">06</span>
+        </div>
+        <div class="wcard-title">Pixel Art Board</div>
+        <p class="wcard-desc">Collaborative 16×16 pixel canvas. Visitors draw and leave a mark — a small social experiment.</p>
+        <div class="wcard-tags">
+          <span class="wtag">JavaScript</span><span class="wtag">Interactive</span>
+        </div>
+        <a href="https://crstntaro.github.io/pixel-art-wall" target="_blank" rel="noopener" class="wcard-link">Visit Project ↗</a>
+      </article>
+
     </div>
   </div>
+</section>
 
-  <!-- ══ SLIDE 1: ABOUT ══ -->
-  <div class="slide" id="s1">
-    <div class="about-inner">
-      <div class="about-photo-col">
-        <div class="about-photo-num">01</div>
-        <img src="taro.jpg" alt="Cristian Gannaban" class="about-photo">
-      </div>
-      <div class="about-content">
-        <div class="slide-no">01 — About</div>
-        <h2 class="about-h">The person<br>behind the<br><span class="or">work.</span></h2>
-        <div class="about-body">
-          <p>Developer based in Manila with a background in web development and data science. I care about whether things work <strong>well</strong> — not just whether they work.</p>
-          <p>I've shipped e-commerce platforms for real clients, <strong>production systems in active use</strong>, and tools built under hackathon pressure.</p>
-        </div>
-        <div class="about-stats">
-          <div><div class="ast-n"><span class="cv" data-t="15">0</span><sup>+</sup></div><div class="ast-d">Projects</div></div>
-          <div><div class="ast-n"><span class="cv" data-t="7">0</span><sup>+</sup></div><div class="ast-d">Technologies</div></div>
-          <div><div class="ast-n"><span class="cv" data-t="2">0</span><sup>y</sup></div><div class="ast-d">Experience</div></div>
-        </div>
-        <div class="about-chips">
-          <span class="chip">Python</span><span class="chip">JavaScript</span><span class="chip">Java</span>
-          <span class="chip">SQL</span><span class="chip">R</span><span class="chip">HTML & CSS</span>
-          <span class="chip">Data Viz</span><span class="chip">Statistics</span>
-          <span class="chip">UI/UX</span><span class="chip">Full Stack</span>
-        </div>
-        <a href="GANNABAN-CV.pdf" download class="about-cv">↓ Download CV</a>
-      </div>
+<!-- ══ ABOUT ══ -->
+<section id="about" class="ms">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="sec-num">02</span>
+      <h2 class="sec-title">About</h2>
     </div>
-  </div>
-
-  <!-- ══ SLIDE 2: SERVICES ══ -->
-  <div class="slide" id="s2">
-    <div class="svc-inner">
-      <div class="svc-header">
-        <h2 class="svc-h">
-          <span style="color:var(--lt);">WHAT</span><br>
-          <span class="hollow">I BUILD</span>
-        </h2>
-        <div class="slide-no" style="flex-direction:column;align-items:flex-end;gap:.3rem;">
-          <span>02 — Services</span>
-          <p class="svc-intro">No jargon. What you get when we work together.</p>
-        </div>
-      </div>
-      <div class="svc-rows">
-        <div class="svc-row"><div class="sv-n">01</div><div><div class="sv-name">Website Design & Development</div><div class="sv-tags"><span class="sv-tag">Business sites</span><span class="sv-tag">Portfolios</span><span class="sv-tag">Landing pages</span></div></div><div class="sv-arrow">↗</div></div>
-        <div class="svc-row"><div class="sv-n">02</div><div><div class="sv-name">Web Apps & E-Commerce</div><div class="sv-tags"><span class="sv-tag">Online stores</span><span class="sv-tag">Dashboards</span><span class="sv-tag">Booking systems</span></div></div><div class="sv-arrow">↗</div></div>
-        <div class="svc-row"><div class="sv-n">03</div><div><div class="sv-name">Data Analysis & Reporting</div><div class="sv-tags"><span class="sv-tag">Visualizations</span><span class="sv-tag">Statistical analysis</span><span class="sv-tag">Reports</span></div></div><div class="sv-arrow">↗</div></div>
-        <div class="svc-row"><div class="sv-n">04</div><div><div class="sv-name">Fixes & Maintenance</div><div class="sv-tags"><span class="sv-tag">Bug fixes</span><span class="sv-tag">New features</span><span class="sv-tag">Redesigns</span></div></div><div class="sv-arrow">↗</div></div>
-      </div>
-      <div class="proc-strip">
-        <div class="proc-cell"><div class="proc-n">01</div><div class="proc-t">You Brief Me</div><div class="proc-d">Right questions before any code.</div></div>
-        <div class="proc-cell"><div class="proc-n">02</div><div class="proc-t">I Build It</div><div class="proc-d">Clean, tested. No surprises.</div></div>
-        <div class="proc-cell"><div class="proc-n">03</div><div class="proc-t">You Own It</div><div class="proc-d">Full handover. Completely yours.</div></div>
-      </div>
-    </div>
-  </div>
-
-  <!-- ══ SLIDE 3: PROJECTS ══ -->
-  <div class="slide" id="s3">
-    <div class="proj-inner">
-      <div class="proj-header">
-        <h2 class="proj-h">Things I've<br><span class="or">shipped.</span></h2>
-        <div class="proj-count">7 projects</div>
-      </div>
-      <div class="proj-grid" id="proj-grid">
-        <!-- tiles injected by JS -->
-      </div>
-    </div>
-  </div>
-
-  <!-- PROJECT OVERLAY -->
-  <div id="proj-overlay">
-    <div id="proj-overlay-bg"></div>
-    <div id="proj-overlay-card">
-      <button class="ov-close" id="ov-close">✕</button>
-      <div class="ov-num" id="ov-num"></div>
-      <span class="ov-badge" id="ov-badge"></span>
-      <div class="ov-rule"></div>
-      <h3 class="ov-title" id="ov-title"></h3>
-      <p class="ov-desc" id="ov-desc"></p>
-      <div class="ov-stack" id="ov-stack"></div>
-      <a class="ov-link" id="ov-link" target="_blank">Visit Project →</a>
-    </div>
-  </div>
-
-  <!-- ══ SLIDE 4: SKILLS ══ -->
-  <div class="slide" id="s4">
-    <div class="sk-inner">
+    <div class="about-grid reveal">
       <div>
-        <div class="slide-no" style="color:rgba(255,255,255,.4);">04 — Skills</div>
-        <h2 class="sk-h">UNDER<br><span class="hollow">THE HOOD</span></h2>
+        <div class="about-photo">
+          <img src="taro.jpg" alt="Cristian Gannaban" loading="lazy">
+        </div>
+        <p class="about-photo-name">Cristian Gannaban</p>
       </div>
-      <div class="sk-grid">
-        <div class="sk-cell"><div class="sk-cell-n">/01</div><div class="sk-cell-name">Frontend</div><div class="sk-cell-desc">Responsive, accessible, pixel-exact.</div><div class="sk-tools"><span class="sk-tool">HTML5</span><span class="sk-tool">CSS3</span><span class="sk-tool">JavaScript</span><span class="sk-tool">Responsive</span></div></div>
-        <div class="sk-cell"><div class="sk-cell-n">/02</div><div class="sk-cell-name">Backend & DB</div><div class="sk-cell-desc">Structured databases, solid APIs, auth that doesn't leak.</div><div class="sk-tools"><span class="sk-tool">SQL</span><span class="sk-tool">DB Design</span><span class="sk-tool">Auth</span><span class="sk-tool">REST APIs</span></div></div>
-        <div class="sk-cell"><div class="sk-cell-n">/03</div><div class="sk-cell-name">Data Science</div><div class="sk-cell-desc">Analysis, modeling, visualizations that inform decisions.</div><div class="sk-tools"><span class="sk-tool">Python</span><span class="sk-tool">R</span><span class="sk-tool">Statistics</span><span class="sk-tool">Pandas</span></div></div>
-        <div class="sk-cell"><div class="sk-cell-n">/04</div><div class="sk-cell-name">Engineering</div><div class="sk-cell-desc">Code the next person can understand. Always.</div><div class="sk-tools"><span class="sk-tool">Java</span><span class="sk-tool">Python</span><span class="sk-tool">OOP</span><span class="sk-tool">Clean Code</span></div></div>
-      </div>
-      <div class="sk-footer">
-        <div class="sk-footer-txt">Want the full picture? <strong>Everything's in my CV.</strong></div>
-        <a href="GANNABAN-CV.pdf" download class="sk-cv">↓ Download CV</a>
+      <div class="about-body">
+        <p>Developer based in Manila. Background in web development and data science. I care about whether things work <strong>well</strong> — not just whether they work.</p>
+        <p>Shipped e-commerce platforms for real clients, <strong>production systems in active use</strong>, and tools built under hackathon pressure. 2+ years building things that ship.</p>
+        <p>I respond within 24 hours and I'll give you a straight answer about what your project actually needs.</p>
+        <div class="skills">
+          <span class="stag hi">Python</span>
+          <span class="stag hi">JavaScript</span>
+          <span class="stag hi">SQL</span>
+          <span class="stag">HTML / CSS</span>
+          <span class="stag">Java</span>
+          <span class="stag">R</span>
+          <span class="stag hi">Full Stack</span>
+          <span class="stag">Data Science</span>
+          <span class="stag">REST APIs</span>
+          <span class="stag">UI / UX</span>
+          <span class="stag">Statistics</span>
+        </div>
+        <a href="GANNABAN-CV.pdf" download class="cv-btn">↓ Download CV</a>
       </div>
     </div>
   </div>
+</section>
 
-  <!-- ══ SLIDE 5: CONTACT ══ -->
-  <div class="slide" id="s5">
-    <div class="ct-inner">
-      <div class="ct-left">
-        <div class="slide-no">05 — Contact</div>
-        <h2 class="ct-big">
-          <span class="or">Got</span> a<br>
-          <span class="hollow">project</span><span class="or">?</span><br>
-          Let's go.
-        </h2>
-        <p class="ct-sub">No commitment. Tell me what you're building and I'll give you an honest take on what it takes.</p>
-        <a href="mailto:cristian.gannaban24@gmail.com" class="ct-email">cristian.gannaban24@gmail.com</a>
-      </div>
-      <div class="ct-right">
-        <div class="ct-avail">
-          <div class="ct-avail-t">Currently Available</div>
-          <div class="ct-avail-b">Looking for <strong>freelance and contract work</strong>. Web development, data projects, or both. I respond within 24 hours.</div>
-          <div class="ct-avail-status">● Available now · Manila, PH</div>
-        </div>
-        <div class="socials">
-          <a href="https://facebook.com/crstntaro" target="_blank" class="soc"><i class="fab fa-facebook-f"></i><span>Facebook</span><span class="soc-h">@crstntaro</span></a>
-          <a href="https://linkedin.com/in/crstntaro" target="_blank" class="soc"><i class="fab fa-linkedin-in"></i><span>LinkedIn</span><span class="soc-h">@crstntaro</span></a>
-          <a href="https://github.com/crstntaro" target="_blank" class="soc"><i class="fab fa-github"></i><span>GitHub</span><span class="soc-h">@crstntaro</span></a>
-          <a href="mailto:cristian.gannaban24@gmail.com" class="soc"><i class="fas fa-envelope"></i><span>Email</span><span class="soc-h">Send now</span></a>
-        </div>
+<!-- ══ CONTACT ══ -->
+<section id="contact" class="ms">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="sec-num">03</span>
+      <h2 class="sec-title">Contact</h2>
+    </div>
+    <div class="contact-inner reveal">
+      <h3 class="contact-heading">Got a project?<br><em>Let's talk.</em></h3>
+      <p class="contact-sub">No commitment. Tell me what you're building and I'll give you an honest take on what it takes.</p>
+      <a href="mailto:cristian.gannaban24@gmail.com" class="contact-email">cristian.gannaban24@gmail.com</a>
+      <div class="socials">
+        <a href="https://github.com/crstntaro" target="_blank" rel="noopener" class="slink">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.44 9.8 8.21 11.39.6.11.82-.26.82-.58v-2.03c-3.34.72-4.04-1.61-4.04-1.61-.55-1.39-1.34-1.76-1.34-1.76-1.09-.75.08-.73.08-.73 1.2.08 1.84 1.24 1.84 1.24 1.07 1.83 2.81 1.3 3.5.99.11-.78.42-1.3.76-1.6-2.67-.3-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.24-3.22-.12-.3-.54-1.52.12-3.18 0 0 1.01-.32 3.3 1.23a11.5 11.5 0 013 0c2.28-1.55 3.29-1.23 3.29-1.23.66 1.66.24 2.88.12 3.18.77.84 1.24 1.91 1.24 3.22 0 4.61-2.81 5.63-5.48 5.92.43.37.82 1.1.82 2.22v3.29c0 .32.21.7.83.58C20.56 21.8 24 17.3 24 12c0-6.63-5.37-12-12-12z"/></svg>
+          GitHub
+        </a>
+        <a href="https://linkedin.com/in/crstntaro" target="_blank" rel="noopener" class="slink">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.45 20.45h-3.55v-5.57c0-1.33-.03-3.04-1.85-3.04-1.85 0-2.13 1.45-2.13 2.94v5.67H9.37V9h3.41v1.56h.05c.47-.9 1.63-1.85 3.36-1.85 3.6 0 4.26 2.37 4.26 5.45v6.29zM5.34 7.43a2.06 2.06 0 110-4.12 2.06 2.06 0 010 4.12zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.45C23.21 24 24 23.23 24 22.27V1.73C24 .77 23.21 0 22.22 0z"/></svg>
+          LinkedIn
+        </a>
+        <a href="https://facebook.com/crstntaro" target="_blank" rel="noopener" class="slink">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.07C24 5.41 18.63 0 12 0S0 5.41 0 12.07C0 18.1 4.39 23.1 10.13 24v-8.44H7.08v-3.49h3.04V9.41c0-3.02 1.8-4.7 4.54-4.7 1.31 0 2.68.24 2.68.24v2.97h-1.51c-1.49 0-1.95.93-1.95 1.89v2.26h3.32l-.53 3.49h-2.79V24C19.61 23.1 24 18.1 24 12.07z"/></svg>
+          Facebook
+        </a>
       </div>
     </div>
   </div>
+</section>
 
-</div><!-- /container -->
+<!-- ══ FOOTER ══ -->
+<footer>
+  <div class="wrap footer-inner">
+    <div class="footer-brand">CG<b>.</b> — Cristian Gannaban</div>
+    <div class="footer-copy">© 2026 · Manila, PH</div>
+  </div>
+</footer>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <script>
-/* ─── CURSOR ─── */
-const cur=document.getElementById('cur');
-let mx=0,my=0;
-document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cur.style.left=mx+'px';cur.style.top=my+'px';});
-document.querySelectorAll('a,button,.chip,.svc-row,.sk-cell,.sk-tool,.soc,.btn,.nav-cta,.about-cv,.sk-cv,.pt').forEach(el=>{
-  el.addEventListener('mouseenter',()=>cur.classList.add('big'));
-  el.addEventListener('mouseleave',()=>cur.classList.remove('big'));
-});
-document.querySelectorAll('.btn,.nav-cta,.sk-cv,.about-cv').forEach(b=>{
-  b.addEventListener('mousemove',e=>{const r=b.getBoundingClientRect();b.style.transform=`translate(${(e.clientX-r.left-r.width/2)*.18}px,${(e.clientY-r.top-r.height/2)*.18}px)`;});
-  b.addEventListener('mouseleave',()=>b.style.transform='');
-});
-
-/* ─── COUNTERS ─── */
-let aboutCounted=false;
-function animCount(el,t){let n=0;const s=t/55;const iv=setInterval(()=>{n=Math.min(n+s,t);el.textContent=Math.floor(n);if(n>=t){el.textContent=t;clearInterval(iv);}},18);}
-setTimeout(()=>document.querySelectorAll('.cv[data-t]').forEach(el=>animCount(el,+el.dataset.t)),400);
-
-/* ─── SLIDE ENGINE ─── */
-const SLIDES=['s0','s1','s2','s3','s4','s5'];
-const LABELS=['Home','About','Services','Work','Skills','Contact'];
-const N=SLIDES.length;
-let current=0,busy=false;
-
-/* Stack all slides at 0,0 */
-SLIDES.forEach((id,i)=>{
-  const el=document.getElementById(id);
-  el.style.cssText+=`;position:absolute;inset:0;transition:none;will-change:transform,opacity;`;
-  el.style.opacity = i===0?'1':'0';
-  el.style.transform = 'none';
-  el.style.zIndex = i===0?'2':'1';
-  el.style.pointerEvents = i===0?'all':'none';
-});
-
-/* Nav dots */
-const dotsEl=document.getElementById('dots');
-SLIDES.forEach((_,i)=>{
-  const d=document.createElement('div');
-  d.className='nav-dot'+(i===0?' active':'');
-  d.addEventListener('click',()=>goTo(i));
-  dotsEl.appendChild(d);
-});
-document.getElementById('sc-tot').textContent=String(N).padStart(2,'0');
-
-const progressBar=document.getElementById('progress');
-const prevArrow=document.getElementById('arrow-prev');
-const nextArrow=document.getElementById('arrow-next');
-
-function goTo(idx){
-  if(busy||idx===current||idx<0||idx>=N)return;
-  busy=true;
-
-  const fromEl=document.getElementById(SLIDES[current]);
-  const toEl=document.getElementById(SLIDES[idx]);
-  const fwd=idx>current;
-
-  /* ─────────────────────────────────────────────────────────────
-     TRANSITION MAP — each DESTINATION slide has its own character.
-     "from" state = where the incoming slide starts
-     "exitTo" = where the outgoing slide goes
-     DUR = duration ms
-     EASE_IN = easing for incoming
-     EASE_OUT = easing for outgoing
-  ───────────────────────────────────────────────────────────── */
-  const T = {
-    // → s0 HERO: sweeps in from left, current crumbles down
-    0:{
-      from:   'translateX(-100%) skewX(-4deg)',
-      exitTo: 'translateY(60px) scale(.88)',
-      opFrom: 0, opExit: 0,
-      dur: 700, easeIn:'cubic-bezier(.77,0,.18,1)', easeOut:'cubic-bezier(.4,0,1,1)',
-    },
-    // → s1 ABOUT: current flips away (rotateY), about slides in from right
-    1:{
-      from:   fwd ? 'translateX(80px) scale(.94)' : 'translateX(-80px) scale(.94)',
-      exitTo: fwd ? 'translateX(-60px) scale(.96)' : 'translateX(60px) scale(.96)',
-      opFrom: 0, opExit: 0,
-      dur: 650, easeIn:'cubic-bezier(.16,1,.3,1)', easeOut:'cubic-bezier(.4,0,.2,1)',
-    },
-    // → s2 SERVICES: current shrinks to center, services expands from center
-    2:{
-      from:   'scale(.7)',
-      exitTo: fwd ? 'scale(1.12) translateY(-20px)' : 'scale(.82) translateY(20px)',
-      opFrom: 0, opExit: 0,
-      dur: 620, easeIn:'cubic-bezier(.34,1.3,.64,1)', easeOut:'cubic-bezier(.4,0,1,1)',
-    },
-    // → s3 PROJECTS: wipes in from bottom (like a curtain rising)
-    3:{
-      from:   'translateY(100%)',
-      exitTo: fwd ? 'translateY(-8%) scale(.96)' : 'translateY(8%) scale(.96)',
-      opFrom: 1, opExit: 0,
-      dur: 680, easeIn:'cubic-bezier(.77,0,.18,1)', easeOut:'cubic-bezier(.4,0,.2,1)',
-    },
-    // → s4 SKILLS: diagonal slash — comes from bottom-right corner
-    4:{
-      from:   fwd ? 'translate(40px,40px) scale(.9)' : 'translate(-40px,-40px) scale(.9)',
-      exitTo: fwd ? 'translate(-30px,-30px) scale(.94)' : 'translate(30px,30px) scale(.94)',
-      opFrom: 0, opExit: 0,
-      dur: 580, easeIn:'cubic-bezier(.16,1,.3,1)', easeOut:'cubic-bezier(.77,0,.18,1)',
-    },
-    // → s5 CONTACT: current slides up and away, contact rises from below
-    5:{
-      from:   'translateY(55px) scale(.95)',
-      exitTo: 'translateY(-40px) scale(1.04)',
-      opFrom: 0, opExit: 0,
-      dur: 660, easeIn:'cubic-bezier(.16,1,.3,1)', easeOut:'cubic-bezier(.4,0,1,1)',
-    },
-  };
-
-  const t = T[idx];
-  const DUR = t.dur;
-
-  /* Snap incoming to start */
-  toEl.style.transition='none';
-  toEl.style.transform=t.from;
-  toEl.style.opacity=String(t.opFrom);
-  toEl.style.zIndex='10';
-  toEl.style.pointerEvents='none';
-  fromEl.style.zIndex='9';
-  fromEl.style.pointerEvents='none';
-
-  requestAnimationFrame(()=>requestAnimationFrame(()=>{
-    /* Outgoing leaves */
-    fromEl.style.transition=`transform ${DUR}ms ${t.easeOut}, opacity ${DUR*.55}ms ease`;
-    fromEl.style.transform=t.exitTo;
-    fromEl.style.opacity=String(t.opExit);
-
-    /* Incoming arrives */
-    toEl.style.transition=`transform ${DUR}ms ${t.easeIn}, opacity ${DUR*.6}ms ease`;
-    toEl.style.transform='none';
-    toEl.style.opacity='1';
-    toEl.style.pointerEvents='all';
-
-    setTimeout(()=>{
-      fromEl.style.transition='none';
-      fromEl.style.transform='none';
-      fromEl.style.opacity='0';
-      fromEl.style.zIndex='1';
-      fromEl.style.pointerEvents='none';
-      toEl.style.zIndex='2';
-      current=idx;
-      busy=false;
-      updateUI();
-      if(idx===1&&!aboutCounted){
-        aboutCounted=true;
-        setTimeout(()=>document.querySelectorAll('.cv[data-t]').forEach(el=>{el.textContent='0';animCount(el,+el.dataset.t);}),200);
-      }
-      if(idx===3&&window._animProjTiles){window._animProjTiles();window._animProjTiles=null;}
-    }, DUR+20);
-  }));
-
-  /* Update nav immediately */
-  document.querySelectorAll('.nav-dot').forEach((d,i)=>d.classList.toggle('active',i===idx));
-  document.getElementById('sc-cur').textContent=String(idx+1).padStart(2,'0');
-  progressBar.style.width=`${(idx/(N-1))*100}%`;
-  prevArrow.classList.toggle('hidden',idx===0);
-  nextArrow.classList.toggle('hidden',idx===N-1);
-}
-
-function updateUI(){
-  document.querySelectorAll('.nav-dot').forEach((d,i)=>d.classList.toggle('active',i===current));
-  document.getElementById('sc-cur').textContent=String(current+1).padStart(2,'0');
-  progressBar.style.width=`${(current/(N-1))*100}%`;
-  prevArrow.classList.toggle('hidden',current===0);
-  nextArrow.classList.toggle('hidden',current===N-1);
-}
-
-prevArrow.addEventListener('click',()=>goTo(current-1));
-nextArrow.addEventListener('click',()=>goTo(current+1));
-document.getElementById('go-work').addEventListener('click',e=>{e.preventDefault();goTo(3);});
-document.getElementById('nav-cta-btn').addEventListener('click',e=>{e.preventDefault();goTo(5);});
-
-document.addEventListener('keydown',e=>{
-  if(['ArrowRight','ArrowDown'].includes(e.key))goTo(current+1);
-  if(['ArrowLeft','ArrowUp'].includes(e.key))goTo(current-1);
-});
-
-/* Wheel — one scroll = one slide, immediate */
-let wheelLocked=false;
-document.addEventListener('wheel',e=>{
-  if(e.target.closest('.about-content'))return;
-  if(wheelLocked||busy)return;
-  if(Math.abs(e.deltaY)<3)return;
-  wheelLocked=true;
-  goTo(current+(e.deltaY>0?1:-1));
-  setTimeout(()=>{ wheelLocked=false; },700);
-},{passive:true});
-
-/* Touch */
-let tX=0,tY=0;
-document.addEventListener('touchstart',e=>{tX=e.touches[0].clientX;tY=e.touches[0].clientY;},{passive:true});
-document.addEventListener('touchend',e=>{
-  const dx=tX-e.changedTouches[0].clientX;
-  const dy=tY-e.changedTouches[0].clientY;
-  if(Math.abs(dy)>Math.abs(dx)&&Math.abs(dy)>50){goTo(current+(dy>0?1:-1));}
-  else if(Math.abs(dx)>Math.abs(dy)&&Math.abs(dx)>50){goTo(current+(dx>0?1:-1));}
-},{passive:true});
-
-updateUI();
-
-/* ─── SCROLL HINT ─── */
-const heroScrollHint=document.querySelector('.hero-scroll-hint');
-if(heroScrollHint){heroScrollHint.style.opacity='0';setTimeout(()=>{heroScrollHint.style.transition='opacity .8s';heroScrollHint.style.opacity='1';},1400);}
-
-/* ─── PROJECT CATALOGUE ─── */
+/* ── Warp-stars hero scene ───────────────────────────────────────── */
 (function(){
-  const PROJECTS=[
-    {num:'★',icon:'🌐',badge:'b-live',label:'● Live',title:'Nippon Hasha Survey',desc:'Full-stack survey platform built for a real company. Live, in active use, handling real data every day — not a demo.',tags:['Full Stack','JavaScript','SQL','Auth System'],link:'https://survey.nipponhasha.com'},
-    {num:'01',icon:'🛒',badge:'b-client',label:'Client',title:'Twistara',desc:'E-commerce platform commissioned and delivered for a client. Products, cart, checkout — built to convert.',tags:['HTML','CSS','JavaScript'],link:'https://crstntaro.github.io/Twistara'},
-    {num:'02',icon:'☂️',badge:'b-client',label:'Client',title:'Bambrella',desc:'Commissioned e-commerce storefront for a small business — polished design, delivered to spec.',tags:['HTML','CSS','JavaScript'],link:'https://crstntaro.github.io/Bambrella'},
-    {num:'03',icon:'🐾',badge:'b-hack',label:'Hackathon',title:'BoneAppetite',desc:'Dog-friendly restaurant locator built under hackathon pressure. Real-time maps via Leaflet + Google Maps API.',tags:['JavaScript','Leaflet','Maps API'],link:'https://crstntaro.github.io/SajaBoysRepo'},
-    {num:'04',icon:'🏢',badge:'b-client',label:'Client',title:'Navitas',desc:'Company portfolio site for a freelance client. Clean, professional, and delivered to spec.',tags:['HTML','CSS'],link:'https://crstntaro.github.io/navitas'},
-    {num:'05',icon:'🔤',badge:'b-pers',label:'Personal',title:'Wordle Clone',desc:'Faithful recreation of the viral word game. Built entirely from scratch in pure JavaScript — zero libraries.',tags:['JavaScript','Game Dev'],link:'https://crstntaro.github.io/wordle-clone'},
-    {num:'06',icon:'🎨',badge:'b-pers',label:'Personal',title:'Pixel Art Board',desc:'Collaborative 16×16 pixel canvas. Visitors draw and leave a mark — a small social experiment.',tags:['JavaScript','Interactive'],link:'https://crstntaro.github.io/pixel-art-wall'},
-  ];
+  const COL={bg:0x080610,red:0xff4d52,cyan:0x00f5d4,white:0xf3f0ea};
+  const PIX=5,N=420;
+  let R,scene,cam,clock,planet,rings=[],asteroids=[],warp,ok=false;
+  const sv=[];
 
-  const grid=document.getElementById('proj-grid');
-  const overlay=document.getElementById('proj-overlay');
-  const ovBg=document.getElementById('proj-overlay-bg');
-
-  /* Build tiles */
-  PROJECTS.forEach((p,i)=>{
-    const tile=document.createElement('div');
-    tile.className='pt';
-    tile.style.transitionDelay=`${i*55}ms`;
-    tile.innerHTML=`
-      <div class="pt-inner">
-        <div class="pt-top">
-          <div class="pt-num">${p.num}</div>
-          <div class="pt-arrow">↗</div>
-        </div>
-        <span class="pt-badge ${p.badge}">${p.label}</span>
-        <div class="pt-name">${p.title}</div>
-        <div class="pt-tags">${p.tags.map(t=>`<span>${t}</span>`).join('')}</div>
-      </div>`;
-
-    tile.addEventListener('click',()=>openOverlay(p));
-    grid.appendChild(tile);
-  });
-
-  /* Animate tiles in when slide 3 becomes active */
-  /* Called from slide engine after transition */
-  window._animProjTiles=function(){
-    document.querySelectorAll('.pt').forEach((t,i)=>{
-      setTimeout(()=>t.classList.add('visible'),i*65);
+  function init(){
+    const cv=document.getElementById('bg3d');
+    if(!cv||typeof THREE==='undefined')return fb(cv);
+    try{R=new THREE.WebGLRenderer({canvas:cv,antialias:false,powerPreference:'low-power'});}
+    catch(e){return fb(cv);}
+    scene=new THREE.Scene();
+    scene.background=new THREE.Color(COL.bg);
+    scene.fog=new THREE.FogExp2(COL.bg,.006);
+    cam=new THREE.PerspectiveCamera(72,1,.1,240);
+    cam.position.set(0,0,10);cam.lookAt(0,0,0);
+    scene.add(new THREE.AmbientLight(0x221133,.7));
+    const k=new THREE.DirectionalLight(COL.red,.85);k.position.set(6,4,6);scene.add(k);
+    const f=new THREE.DirectionalLight(COL.cyan,.28);f.position.set(-5,-3,-6);scene.add(f);
+    /* warp stars */
+    const sG=new THREE.BufferGeometry();
+    const sP=new Float32Array(N*3);
+    for(let i=0;i<N;i++){
+      const r=1+Math.random()*70,th=Math.random()*Math.PI*2,ph=Math.acos(2*Math.random()-1);
+      sP[i*3]=r*Math.sin(ph)*Math.cos(th);
+      sP[i*3+1]=r*Math.sin(ph)*Math.sin(th)*.55;
+      sP[i*3+2]=-Math.random()*130;
+      sv.push(.22+Math.random()*.52);
+    }
+    sG.setAttribute('position',new THREE.BufferAttribute(sP,3));
+    warp=new THREE.Points(sG,new THREE.PointsMaterial({color:COL.white,size:.16,sizeAttenuation:true}));
+    scene.add(warp);
+    /* planet */
+    const pG=new THREE.IcosahedronGeometry(14,1);
+    planet=new THREE.Mesh(pG,new THREE.MeshStandardMaterial({color:0x1a0824,flatShading:true,roughness:1}));
+    planet.position.set(-32,14,-70);scene.add(planet);
+    planet.add(new THREE.LineSegments(new THREE.EdgesGeometry(pG),new THREE.LineBasicMaterial({color:COL.red,transparent:true,opacity:.2})));
+    /* rings */
+    [[3.2,.06,COL.red,Math.PI*.35,0],[2.0,.06,COL.cyan,-Math.PI*.25,1]].forEach(([r,t,c,rx,i])=>{
+      const m=new THREE.Mesh(new THREE.TorusGeometry(r,t,8,52),new THREE.MeshBasicMaterial({color:c,wireframe:true}));
+      m.rotation.x=rx;m.position.set(0,0,-4);m.userData={sp:.28+i*.18};
+      scene.add(m);rings.push(m);
     });
-  };
-
-  /* Overlay */
-  function openOverlay(p){
-    document.getElementById('ov-num').textContent=p.num+' / 06';
-    const badge=document.getElementById('ov-badge');
-    badge.textContent=p.label;
-    badge.className=`ov-badge ${p.badge}`;
-    document.getElementById('ov-title').textContent=p.title;
-    document.getElementById('ov-desc').textContent=p.desc;
-    document.getElementById('ov-stack').innerHTML=p.tags.map(t=>`<span class="ov-tag">${t}</span>`).join('');
-    document.getElementById('ov-link').href=p.link;
-    overlay.classList.add('open');
-    document.body.style.cursor='none';
+    /* asteroids */
+    const ac=[0xff4d52,0x2a2838,0x3b3950,0x00f5d4,0x201f2b];
+    for(let i=0;i<16;i++){
+      const s=.14+Math.random()*.42;
+      const aG=new THREE.IcosahedronGeometry(s,0);
+      const a=new THREE.Mesh(aG,new THREE.MeshStandardMaterial({color:ac[i%ac.length],flatShading:true,roughness:.9}));
+      a.position.set((Math.random()-.5)*46,(Math.random()-.5)*26,-3-Math.random()*22);
+      a.userData={vx:(Math.random()-.5)*.022,vz:.016+Math.random()*.022,rx:(Math.random()-.5)*.038,ry:(Math.random()-.5)*.028};
+      a.add(new THREE.LineSegments(new THREE.EdgesGeometry(aG),new THREE.LineBasicMaterial({color:i%4===3?COL.cyan:COL.white,transparent:true,opacity:.5})));
+      scene.add(a);asteroids.push(a);
+    }
+    ok=true;window.addEventListener('resize',resize);resize();clock=new THREE.Clock();loop();
   }
 
-  function closeOverlay(){overlay.classList.remove('open');}
+  function resize(){
+    if(!ok)return;
+    const w=window.innerWidth,h=window.innerHeight;
+    R.setPixelRatio(1);R.setSize(Math.max(1,Math.floor(w/PIX)),Math.max(1,Math.floor(h/PIX)),false);
+    R.domElement.style.width=w+'px';R.domElement.style.height=h+'px';
+    cam.aspect=w/h;cam.updateProjectionMatrix();
+  }
 
-  document.getElementById('ov-close').addEventListener('click',closeOverlay);
-  ovBg.addEventListener('click',closeOverlay);
-  document.addEventListener('keydown',e=>{if(e.key==='Escape')closeOverlay();});
+  function loop(){
+    requestAnimationFrame(loop);
+    const t=clock.getElapsedTime();
+    const p=warp.geometry.attributes.position.array;
+    for(let i=0;i<N;i++){
+      p[i*3+2]+=sv[i];
+      if(p[i*3+2]>14){
+        const r=1+Math.random()*65,th=Math.random()*Math.PI*2,ph=Math.acos(2*Math.random()-1);
+        p[i*3]=r*Math.sin(ph)*Math.cos(th);
+        p[i*3+1]=r*Math.sin(ph)*Math.sin(th)*.55;
+        p[i*3+2]=-120;
+      }
+    }
+    warp.geometry.attributes.position.needsUpdate=true;
+    planet.rotation.y=t*.038;
+    rings.forEach((r,i)=>{r.rotation.y=t*r.userData.sp*(i?-1:1);r.rotation.x+=.003*(i?-1:1);r.position.y=Math.sin(t*.4+i)*.35;});
+    asteroids.forEach(a=>{a.rotation.x+=a.userData.rx;a.rotation.y+=a.userData.ry;a.position.x+=a.userData.vx;a.position.z+=a.userData.vz;if(a.position.z>12)a.position.set((Math.random()-.5)*46,(Math.random()-.5)*26,-24);});
+    cam.position.x=Math.sin(t*.07)*1.4;cam.position.y=Math.cos(t*.055)*.5;cam.lookAt(0,0,0);
+    R.render(scene,cam);
+  }
+
+  function fb(cv){
+    if(cv)cv.style.display='none';
+    const h=document.getElementById('hero');
+    if(h)h.style.background='radial-gradient(ellipse 80% 60% at 50% 40%,#1a0824 0%,#080610 70%)';
+  }
+  document.readyState==='loading'?document.addEventListener('DOMContentLoaded',init):init();
 })();
 
+/* ── Battle system — ambient retro dogfight ──────────────────────── */
+(function(){
+  const CV=document.getElementById('battle-cv');
+  if(!CV)return;
+  const CTX=CV.getContext('2d');
+  let W=0,H=0;
+  function resize(){W=CV.width=window.innerWidth;H=CV.height=window.innerHeight;}
+  window.addEventListener('resize',resize);resize();
 
+  const P=1.9;
+
+  function drawJet(ctx,x,y,angle,team){
+    const body=team===0?'#ff4d52':'#00f5d4';
+    const wing=team===0?'#cc3d42':'#00c4aa';
+    const flame=team===0?'#ffce54':'#54d98c';
+    ctx.save();ctx.translate(x,y);ctx.rotate(angle);
+    ctx.fillStyle=flame;
+    ctx.fillRect(-P*5.5,-P*.55,P*2.2,P*1.1);
+    ctx.fillStyle='rgba(255,255,255,.4)';
+    ctx.fillRect(-P*4.8,-P*.28,P*.9,P*.56);
+    ctx.fillStyle=body;
+    ctx.fillRect(-P*3.2,-P,P*5.8,P*2);
+    ctx.fillRect(P*2.6,-P*.48,P*1.8,P*.96);
+    ctx.fillStyle=wing;
+    ctx.fillRect(-P*2.5,-P*3.1,P*3.5,P*2.1);
+    ctx.fillRect(-P*2.5,P*1.0,P*3.5,P*2.1);
+    ctx.fillStyle=body;
+    ctx.fillRect(-P*3.4,-P*1.8,P*.65,P*.8);
+    ctx.fillRect(-P*3.4,P*1.0,P*.65,P*.8);
+    ctx.fillStyle='rgba(180,225,255,.88)';
+    ctx.fillRect(P*.1,-P*.42,P*.8,P*.84);
+    ctx.restore();
+  }
+
+  function drawBullet(ctx,b){
+    ctx.save();ctx.translate(b.x,b.y);ctx.rotate(b.angle);
+    ctx.fillStyle=b.team===0?'rgba(255,77,82,.22)':'rgba(0,245,212,.22)';
+    ctx.fillRect(-8,-2.2,16,4.4);
+    ctx.fillStyle=b.team===0?'#ff4d52':'#00f5d4';
+    ctx.fillRect(-5,-1.1,10,2.2);
+    ctx.fillStyle='#fff';ctx.fillRect(3.5,-.7,3,1.4);
+    ctx.restore();
+  }
+
+  function mkExp(x,y,team){
+    const col=team===0?'#ff4d52':'#00f5d4';
+    const wing=team===0?'#cc3d42':'#00c4aa';
+    const flame=team===0?'#ffce54':'#54d98c';
+    // Chunks mirror the jet's actual pixel parts
+    const chunkDefs=[
+      {w:P*5.8,h:P*2,  c:col},
+      {w:P*3.5,h:P*2.1,c:wing},
+      {w:P*3.5,h:P*2.1,c:wing},
+      {w:P*1.8,h:P*.96,c:col},
+      {w:P*.65,h:P*.8, c:flame},
+      {w:P*.65,h:P*.8, c:flame},
+      {w:P*.8, h:P*.84,c:'rgba(180,225,255,.9)'},
+    ];
+    const chunks=chunkDefs.map(d=>{
+      const a=Math.random()*Math.PI*2;
+      const spd=1.6+Math.random()*3.4;
+      return{...d,x:0,y:0,vx:Math.cos(a)*spd,vy:Math.sin(a)*spd,
+        rot:Math.random()*Math.PI*2,vrot:(Math.random()-.5)*.28};
+    });
+    const sparks=Array.from({length:16},()=>({
+      x:0,y:0,vx:(Math.random()-.5)*7.5,vy:(Math.random()-.5)*7.5,
+      c:Math.random()>.45?col:flame,s:P*(1+~~(Math.random()*2)),
+    }));
+    return{x,y,team,f:0,chunks,sparks};
+  }
+
+  function drawExp(ctx,e){
+    const LIFE=52;
+    const t=e.f/LIFE;
+    // Stepped opacity — retro feel
+    const a=t<.2?1:t<.45?.72:t<.7?.42:t<.9?.2:0;
+    if(a<=0)return;
+    const col=e.team===0?'#ff4d52':'#00f5d4';
+    const flame=e.team===0?'#ffce54':'#54d98c';
+    ctx.save();
+    // White flash square — first 4 frames
+    if(e.f<5){
+      ctx.globalAlpha=1-e.f/5;
+      ctx.fillStyle='#fff';
+      const fs=P*9;ctx.fillRect(e.x-fs*.5,e.y-fs*.5,fs,fs);
+    }
+    // Pixel shockwave ring (8-dot circle expanding)
+    if(e.f<22){
+      const ra=1-e.f/22;ctx.globalAlpha=ra;
+      const rr=e.f*3.8;
+      for(let i=0;i<8;i++){
+        const ang=(i/8)*Math.PI*2;
+        ctx.fillStyle=i%2===0?col:flame;
+        ctx.fillRect(e.x+Math.cos(ang)*rr-2,e.y+Math.sin(ang)*rr-2,4,4);
+      }
+    }
+    // Debris chunks (tumbling pixel blocks)
+    ctx.globalAlpha=a;
+    e.chunks.forEach(ch=>{
+      ctx.save();
+      ctx.translate(e.x+ch.x,e.y+ch.y);ctx.rotate(ch.rot);
+      ctx.fillStyle=ch.c;
+      ctx.fillRect(-ch.w*.5,-ch.h*.5,ch.w,ch.h);
+      ctx.restore();
+    });
+    // Pixel sparks
+    e.sparks.forEach(sp=>{
+      ctx.fillStyle=sp.c;ctx.globalAlpha=a*.9;
+      ctx.fillRect(e.x+sp.x-sp.s*.5,e.y+sp.y-sp.s*.5,sp.s,sp.s);
+    });
+    ctx.restore();
+  }
+
+  /* angle pools: red goes mostly right, cyan mostly left */
+  const ANG={
+    0:[0,.32,-.32,.52,-.52,Math.PI/4,-Math.PI/4],
+    1:[Math.PI,Math.PI+.32,Math.PI-.32,Math.PI+.52,Math.PI-.52,Math.PI*3/4,-Math.PI*3/4]
+  };
+
+  class Ship{
+    constructor(team,init){this.team=team;this.init=init;this.spawn();}
+    spawn(){
+      const pool=ANG[this.team];
+      this.angle=pool[~~(Math.random()*pool.length)]+(Math.random()-.5)*.18;
+      this.speed=1.1+Math.random()*1.5;
+      this.vx=Math.cos(this.angle)*this.speed;
+      this.vy=Math.sin(this.angle)*this.speed;
+      const m=80;
+      if(this.init){
+        this.x=m+Math.random()*(W-m*2);this.y=m+Math.random()*(H-m*2);
+      } else {
+        if(Math.abs(this.vx)>=Math.abs(this.vy)){
+          this.x=this.vx>0?-m:W+m;this.y=m+Math.random()*(H-m*2);
+        } else {
+          this.y=this.vy>0?-m:H+m;this.x=m+Math.random()*(W-m*2);
+        }
+      }
+      this.px=-Math.sin(this.angle);this.py=Math.cos(this.angle);
+      this.wA=6+Math.random()*14;this.wF=.012+Math.random()*.018;
+      this.wT=Math.random()*Math.PI*2;
+      this.cd=42+~~(Math.random()*56);this.hp=2;this.alive=true;
+    }
+    update(bullets,exps){
+      if(!this.alive)return;
+      this.wT+=this.wF;
+      const w=Math.sin(this.wT)*this.wA*.055;
+      this.x+=this.vx+this.px*w;this.y+=this.vy+this.py*w;
+      const m=90;
+      if(this.x>W+m||this.x<-m||this.y>H+m||this.y<-m)this.spawn();
+      if(--this.cd<=0){
+        bullets.push({
+          x:this.x+Math.cos(this.angle)*22,
+          y:this.y+Math.sin(this.angle)*22,
+          vx:Math.cos(this.angle)*7.2,vy:Math.sin(this.angle)*7.2,
+          angle:this.angle,team:this.team,alive:true
+        });
+        this.cd=42+~~(Math.random()*55);
+      }
+    }
+    hit(exps){
+      if(!this.alive)return;
+      if(--this.hp<=0){
+        this.alive=false;
+        exps.push(mkExp(this.x,this.y,this.team));
+        setTimeout(()=>this.spawn(),1600+Math.random()*2200);
+      }
+    }
+    draw(ctx){
+      if(this.alive)drawJet(ctx,Math.round(this.x),Math.round(this.y),this.angle,this.team);
+    }
+  }
+
+  const ships=[
+    new Ship(0,true),new Ship(0,true),new Ship(0,true),
+    new Ship(1,true),new Ship(1,true),new Ship(1,true),
+  ];
+  let bullets=[],exps=[];
+
+  (function loop(){
+    requestAnimationFrame(loop);
+    CTX.clearRect(0,0,W,H);
+    bullets.forEach(b=>{b.x+=b.vx;b.y+=b.vy;if(b.x<-30||b.x>W+30||b.y<-30||b.y>H+30)b.alive=false;});
+    bullets.forEach(b=>{
+      if(!b.alive)return;
+      ships.forEach(s=>{
+        if(!s.alive||s.team===b.team)return;
+        if(Math.abs(b.x-s.x)<20&&Math.abs(b.y-s.y)<15){b.alive=false;s.hit(exps);}
+      });
+    });
+    ships.forEach(s=>s.update(bullets,exps));
+    exps.forEach(e=>{
+      e.f++;
+      e.chunks.forEach(ch=>{ch.x+=ch.vx;ch.y+=ch.vy;ch.vx*=.91;ch.vy=ch.vy*.91+.06;ch.rot+=ch.vrot;});
+      e.sparks.forEach(sp=>{sp.x+=sp.vx;sp.y+=sp.vy;sp.vx*=.86;sp.vy*=.86;});
+    });
+    bullets=bullets.filter(b=>b.alive);
+    if(bullets.length>60)bullets.splice(0,bullets.length-60);
+    exps=exps.filter(e=>e.f<52);
+    exps.forEach(e=>drawExp(CTX,e));
+    bullets.forEach(b=>drawBullet(CTX,b));
+    ships.forEach(s=>s.draw(CTX));
+  })();
+})();
+
+/* ── Tetris background ───────────────────────────────────────────── */
+(function(){
+  const cv=document.getElementById('tetris-cv');
+  if(!cv)return;
+  const ctx=cv.getContext('2d');
+  const CELL=24,GAP=2;
+  let W,H,COLS,ROWS,grid=[],active=[];
+
+  const SHAPES=[
+    [[0,0],[1,0],[2,0],[3,0]],  // I horiz
+    [[0,0],[0,1],[0,2],[0,3]],  // I vert
+    [[0,0],[1,0],[0,1],[1,1]],  // O
+    [[1,0],[0,1],[1,1],[2,1]],  // T
+    [[1,0],[2,0],[0,1],[1,1]],  // S
+    [[0,0],[1,0],[1,1],[2,1]],  // Z
+    [[0,0],[0,1],[1,1],[2,1]],  // J
+    [[2,0],[0,1],[1,1],[2,1]],  // L
+  ];
+  const WIDTHS=[4,1,2,3,3,3,3,3];
+  const COLORS=['#ff4d52','#00f5d4','#9d98b0','#56526a','#ff4d52','#9d98b0','#56526a','#ff4d52'];
+
+  function init(){
+    W=cv.width=window.innerWidth;
+    H=cv.height=window.innerHeight;
+    COLS=Math.floor(W/CELL);
+    ROWS=Math.ceil(H/CELL)+1;
+    grid=Array.from({length:ROWS},()=>new Array(COLS).fill(0));
+    active=Array.from({length:8},(_,i)=>spawn(true,i));
+  }
+
+  function spawn(spread=false,idx=0){
+    const s=~~(Math.random()*SHAPES.length);
+    const maxC=Math.max(0,COLS-WIDTHS[s]-1);
+    const startY=spread?-(2+~~(Math.random()*ROWS)):-2;
+    return{s,x:~~(Math.random()*(maxC+1)),y:startY,
+      ms:700+~~(Math.random()*700),
+      next:Date.now()+(spread?idx*800+~~(Math.random()*2000):~~(Math.random()*400))
+    };
+  }
+
+  function hits(s,x,y){
+    return SHAPES[s].some(([dx,dy])=>{
+      const nx=x+dx,ny=y+dy;
+      return nx<0||nx>=COLS||ny>=ROWS||(ny>=0&&grid[ny][nx]);
+    });
+  }
+
+  function place(p){
+    SHAPES[p.s].forEach(([dx,dy])=>{
+      const nx=p.x+dx,ny=p.y+dy;
+      if(ny>=0&&ny<ROWS&&nx>=0&&nx<COLS)grid[ny][nx]=COLORS[p.s];
+    });
+    // Clear full rows
+    for(let r=ROWS-1;r>=0;){
+      if(grid[r].every(Boolean)){grid.splice(r,1);grid.unshift(new Array(COLS).fill(0));}
+      else r--;
+    }
+    // Reset top half if stack too high
+    if(grid.slice(0,~~(ROWS*.22)).some(r=>r.some(Boolean))){
+      for(let r=0;r<~~(ROWS*.5);r++)grid[r]=new Array(COLS).fill(0);
+    }
+  }
+
+  init();
+  window.addEventListener('resize',init);
+
+  (function loop(){
+    requestAnimationFrame(loop);
+    const now=Date.now();
+    for(let i=0;i<active.length;i++){
+      const p=active[i];
+      if(now<p.next)continue;
+      if(!hits(p.s,p.x,p.y+1)){p.y++;p.next=now+p.ms;}
+      else{if(p.y>=0)place(p);active[i]=spawn();}
+    }
+    ctx.clearRect(0,0,W,H);
+    for(let r=0;r<ROWS;r++)
+      for(let c=0;c<COLS;c++)
+        if(grid[r][c]){ctx.fillStyle=grid[r][c];ctx.fillRect(c*CELL+1,r*CELL+1,CELL-GAP,CELL-GAP);}
+    active.forEach(p=>{
+      ctx.fillStyle=COLORS[p.s];
+      SHAPES[p.s].forEach(([dx,dy])=>{
+        const ny=p.y+dy;
+        if(ny>=0)ctx.fillRect((p.x+dx)*CELL+1,ny*CELL+1,CELL-GAP,CELL-GAP);
+      });
+    });
+  })();
+})();
+
+/* ── Scroll reveal (spring stagger) ─────────────────────────────── */
+(function(){
+  const io=new IntersectionObserver(entries=>{
+    entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('vis');io.unobserve(e.target);}});
+  },{threshold:.08});
+  document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+})();
+
+/* ── Section heading: number scramble + title wipe ──────────────── */
+(function(){
+  function scramble(el,final){
+    const d='0123456789';
+    let n=0;
+    const id=setInterval(()=>{
+      if(n++<5){el.textContent=d[~~(Math.random()*10)]+d[~~(Math.random()*10)];}
+      else{el.textContent=final;clearInterval(id);}
+    },48);
+  }
+  const io=new IntersectionObserver(entries=>{
+    entries.forEach(e=>{
+      if(e.isIntersecting){
+        e.target.classList.add('sec-head--in');
+        const num=e.target.querySelector('.sec-num');
+        if(num){const f=num.textContent;scramble(num,f);}
+        io.unobserve(e.target);
+      }
+    });
+  },{threshold:.35});
+  document.querySelectorAll('.sec-head').forEach(h=>io.observe(h));
+})();
+
+/* ── Hero parallax — content drifts up slower than scroll, fades out */
+(function(){
+  const content=document.querySelector('#hero .hero-content');
+  const hero=document.getElementById('hero');
+  if(!content||!hero)return;
+  let tick=false;
+  window.addEventListener('scroll',()=>{
+    if(!tick){
+      requestAnimationFrame(()=>{
+        const s=window.scrollY;
+        const h=hero.offsetHeight;
+        content.style.transform=`translateY(${s*.22}px)`;
+        content.style.opacity=Math.max(0,1-(s/h)*1.7);
+        tick=false;
+      });
+      tick=true;
+    }
+  },{passive:true});
+})();
+
+/* ── About parallax — photo and text move at different depths ── */
+(function(){
+  const sec=document.getElementById('about');
+  const photo=sec?.querySelector('.about-photo');
+  const body=sec?.querySelector('.about-body');
+  if(!photo||!body)return;
+  photo.style.willChange='transform';
+  body.style.willChange='transform';
+  let tick=false;
+  window.addEventListener('scroll',()=>{
+    if(!tick){
+      requestAnimationFrame(()=>{
+        const rect=sec.getBoundingClientRect();
+        const progress=(window.innerHeight-rect.top)/(window.innerHeight+rect.height);
+        if(progress>-0.1&&progress<1.1){
+          const d=(progress-.5)*32;
+          photo.style.transform=`translateY(${-d*.45}px)`;
+          body.style.transform=`translateY(${d*.18}px)`;
+        }
+        tick=false;
+      });
+      tick=true;
+    }
+  },{passive:true});
+})();
+
+/* ── Contact — heading scales into view as section enters ── */
+(function(){
+  const sec=document.getElementById('contact');
+  const heading=sec?.querySelector('.contact-heading');
+  if(!heading)return;
+  heading.style.transformOrigin='left top';
+  heading.style.willChange='transform';
+  let tick=false;
+  window.addEventListener('scroll',()=>{
+    if(!tick){
+      requestAnimationFrame(()=>{
+        const rect=sec.getBoundingClientRect();
+        const p=Math.max(0,Math.min(1,(window.innerHeight-rect.top)/(window.innerHeight*.65)));
+        heading.style.transform=`scale(${.88+p*.12})`;
+        tick=false;
+      });
+      tick=true;
+    }
+  },{passive:true});
+})();
+
+/* ── Nav active state ────────────────────────────────────────────── */
+(function(){
+  const sections=document.querySelectorAll('section[id]');
+  const links=document.querySelectorAll('.nav-links a[href^="#"]');
+  const io=new IntersectionObserver(entries=>{
+    entries.forEach(e=>{
+      if(e.isIntersecting){
+        links.forEach(l=>l.classList.remove('active'));
+        document.querySelector(`.nav-links a[href="#${e.target.id}"]`)?.classList.add('active');
+      }
+    });
+  },{rootMargin:'-40% 0px -50% 0px'});
+  sections.forEach(s=>io.observe(s));
+})();
 </script>
 </body>
 </html>
